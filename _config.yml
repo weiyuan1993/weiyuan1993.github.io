@@ -78,4 +78,7 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/weiyuan1993/weiyuan1993.github.io.git
+  branch: master
+  message: [message]
