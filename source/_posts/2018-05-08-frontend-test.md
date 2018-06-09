@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript 實務測試新手班學習筆記"
 date:   2018-05-08 20:25:26 +0800
-categories: javascript
+categories: JavaScript
 tags:
 -  JavaScript
 -  Unit Test

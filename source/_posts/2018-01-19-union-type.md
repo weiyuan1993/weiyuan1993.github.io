@@ -2,7 +2,7 @@
 layout: post
 title:  "[TypeScript]Union Type & Type Guard"
 date:   2018-01-19 20:25:26 +0800
-categories: TypeScript
+categories: JavaScript
 tags:
 -  JavaScript
 -  TypeScript
