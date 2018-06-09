@@ -55,23 +55,33 @@ deploy:
 這樣執行`hexo deploy`就能將靜態檔案推送到`master`了，因為 GitHub 默認使用 master 當作 GitHub Page
 
 ## 主題管理
-原本我是直接 clone Next 主題到 themes/next ，好處是隨時可以 pull 更新，但此法會生成一個 git repo ，這樣我對於主題設定檔的變更及客製化無法推送 GitHub，查了原因是說，查了原因是說用了第三方的 repo ，是無法直接 push 的。
-解法是用`fork`的方式到站點資料夾
-
-```bash
-$ git submodule add https://github.com/weiyuan1993/hexo-theme-next.git themes/ next
+我使用簡約的 NexT 主題，直接透過 git clone 方式安裝到站點
+``` 
+$ git clone https://github.com/theme-next/hexo-theme-next.git themes/next
+```
+在 `_config.yml` 設定 :
+```
+theme: next
 ```
 
-此法會建立 submodule ，之後有修改主題資料夾內的東西，就可以推送到 source 分支
+為了之後可以隨時使用 git pull 更新主題，我採用 HEXO 的 `Data files` feature：
 
-```bash
-$ git add .
-$ git commit -m "modify theme"
-$ git push origin source
+從 `主題的 _config.yml` 文件中複製所有設定到  `HEXO 的 _config.yml` 中，然後在這些參數最上方添加一行 `theme_config :`，並將所有參數縮排兩空格以符合 yml 格式
+
+使用此一方式可以很輕鬆地只要管理一份 HEXO 的`_config.yml` 即可，也可以推送到 GitHub 保存，這樣在 pull 第三方的 NexT repo 才不容易出現問題(如果有更動檔案的話)。
+
+之後換電腦或是在別的電腦想寫文章，直接 clone source 分支，這樣就包含了設定好的 `_config.yml` 和乾淨的主題配置。
+
+## 換電腦寫文章初始設定
+經實測發現 clone 下來的 主題會是空的，所以須補上 clone 主題
+
 ```
-[參考資料](https://git-scm.com/book/zh-tw/v1/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E7%B5%84-Submodules
-)
+$ git clone -b source https://github.com/weiyuan1993/weiyuan1993.github.io.git
+$ git clone https://github.com/theme-next/hexo-theme-next.git themes/next
+$ npm install
+```
 
+[參考資料](https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md)
 
 ## 新增 categories、about、tags 等頁面
 
@@ -91,8 +101,19 @@ comments: false
 ```
 以此類推
 
+## 設定 favicons
+新增 `source/favicons` 資料夾，將所需圖檔放入，並在 `_config.yml` 主題設定區設定：
+```
+  avatar:
+    url: /favicons/favicon.png
+  favicon:
+    small: /favicons/favicon-16x16.png
+    medium: /favicons/favicon-32x32.png
+    apple_touch_icon: /favicons/apple-icon-180x180.png
+    safari_pinned_tab: /favicons/apple-icon-180x180.png
+```
 ## 新增 DISQUS 留言板功能
-先去 [DISQUS](https://disqus.com/) 官網辦帳號，設定 shortname，並在 Next 主題的 `_config.yml`設定：
+先去 [DISQUS](https://disqus.com/) 官網辦帳號，設定 shortname，並在 `_config.yml` 主題設定區設定：
 ```
 # Disqus
 disqus:
