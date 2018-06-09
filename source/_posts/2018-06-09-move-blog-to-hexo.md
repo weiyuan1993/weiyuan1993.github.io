@@ -59,7 +59,7 @@ deploy:
 解法是用`fork`的方式到站點資料夾
 
 ```bash
-$ git submodule add https://github.com/theme-next/hexo-theme-next.git themes/ next
+$ git submodule add https://github.com/weiyuan1993/hexo-theme-next.git themes/ next
 ```
 
 此法會建立 submodule ，之後有修改主題資料夾內的東西，就可以推送到 source 分支
