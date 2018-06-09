@@ -77,8 +77,7 @@ theme: next
 
 ```
 $ git clone -b source https://github.com/weiyuan1993/weiyuan1993.github.io.git
-$ git clone https://github.com/theme-next/hexo-theme-next.git themes/next
-$ npm install
+$ npm run init
 ```
 
 [參考資料](https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md)
@@ -168,6 +167,24 @@ $ git push origin source
 $ hexo generate -d
 ```
 
+### 懶人指令
+直接用 `package.json` 寫了快速指令
+```
+  "scripts": {
+    "init": "git clone https://github.com/theme-next/hexo-theme-next.git themes/next && npm install",
+    "update": "git pull origin source",
+    "start": "hexo s",
+    "deploy": "hexo generate -d",
+    "push_source": "git add . && git commit -m 'update' && git push origin source",
+    "deploy_push_source": "git add . && git commit -m 'update' && git push origin source && hexo generate -d"
+  }
+```
+1. `npm run init`: git clone 下來初始化設定
+2. `npm run update`: pull 最新的 source 分支
+3. `npm run start`: 啟動 server
+4. `npm run deploy`: 生成後發佈
+5. `npm run push_source`: push 更動後的 source 檔
+6. `npm deploy_push_source`: push 更動後的 source 檔，並且發佈到網站
 
 ## 待處理的事項
 目前 google search 搜尋不到本站，需解決 SEO 問題。
