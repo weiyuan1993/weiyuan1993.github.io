@@ -10,7 +10,8 @@
     "update": "git pull origin source",
     "start": "hexo s",
     "deploy": "hexo generate -d",
-    "push_source": "git add . && git commit -m 'update' && git push origin source"
+    "push_source": "git add . && git commit -m 'update' && git push origin source",
+    "deploy_push_source": "git add . && git commit -m 'update' && git push origin source && hexo generate -d"
   },
   "dependencies": {
     "hexo": "^3.2.0",
