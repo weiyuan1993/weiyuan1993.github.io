@@ -190,17 +190,33 @@ $ hexo generate -d
 
 折騰了一天，終於大功告成，中間還裝了兩次ＱＱ
 
-更新：
+## SEO優化
 
-### 設定 Google 分析與 search control
+### 設定 Google 分析與 search console
 為了解決無法搜尋到部落格的問題，先去[Google Webmaster](https://www.google.com/webmasters/)新增網址，選擇其他方式裡使用 html 標記的方式，複製`<meta>`標記的`content`字串，接著在`_config.yml`裡貼上：
-
+```
   google_site_verification: xxxxxxxxxxxxxxxxxxxxxx
-GA則是貼上：
+
+  GA則是貼上：
   google_analytics: UA-XXXXXXXX
+```
 
-接著點選驗證網站，即大功告成。
+點選驗證網站後，即大功告成
 
+
+### 新增 sitemap.xml
+
+```bash
+$ npm install hexo-generator-sitemap --save
+```
+
+在站點的 `_config.yml` 設定：
+```
+sitemap: 
+  path: sitemap.xml 
+
+```
+之後重新產生網站時就會多一個 sitemap.xml 檔案，再來到 search console 提交 sitemap.xml 及完成。
 
 
 
