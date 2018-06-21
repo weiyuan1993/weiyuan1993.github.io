@@ -186,7 +186,21 @@ $ hexo generate -d
 5. `npm run push_source`: push 更動後的 source 檔
 6. `npm deploy_push_source`: push 更動後的 source 檔，並且發佈到網站
 
-## 待處理的事項
-目前 google search 搜尋不到本站，需解決 SEO 問題。
+
 
 折騰了一天，終於大功告成，中間還裝了兩次ＱＱ
+
+更新：
+
+### 設定 Google 分析與 search control
+為了解決無法搜尋到部落格的問題，先去[Google Webmaster](https://www.google.com/webmasters/)新增網址，選擇其他方式裡使用 html 標記的方式，複製`<meta>`標記的`content`字串，接著在`_config.yml`裡貼上：
+
+  google_site_verification: xxxxxxxxxxxxxxxxxxxxxx
+GA則是貼上：
+  google_analytics: UA-XXXXXXXX
+
+接著點選驗證網站，即大功告成。
+
+
+
+
