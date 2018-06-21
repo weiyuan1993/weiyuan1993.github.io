@@ -188,9 +188,10 @@ $ hexo generate -d
 
 
 
-折騰了一天，終於大功告成，中間還裝了兩次ＱＱ
+折騰了一天，終於大功告成，中間還裝了兩次ＱＱ 
 
-## SEO優化
+
+## SEO優化
 
 ### 設定 Google 分析與 search console
 為了解決無法搜尋到部落格的問題，先去[Google Webmaster](https://www.google.com/webmasters/)新增網址，選擇其他方式裡使用 html 標記的方式，複製`<meta>`標記的`content`字串，接著在`_config.yml`裡貼上：
