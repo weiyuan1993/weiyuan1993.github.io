@@ -671,10 +671,11 @@ theme_config:
 
   # Google Webmaster tools verification setting
   # See: https://www.google.com/webmasters/
-  #google_site_verification:
+  google_site_verification: VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc
 
   # Google Analytics
-  #google_analytics:
+  google_analytics: UA-121123169-1
+
 
   # Bing Webmaster tools verification setting
   # See: https://www.bing.com/webmaster/
