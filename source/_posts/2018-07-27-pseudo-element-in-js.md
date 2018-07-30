@@ -16,37 +16,36 @@ tags:
 
 ```javascript
 const addStyle = function(selector, rule, pseudoElement) {
-    var _sheetId = "customPseudoStyle";
-    var _head = document.head || document.getElementsByTagName("head")[0];
-    var _sheet =
-        document.getElementById(_sheetId) || document.createElement("style");
-    _sheet.id = _sheetId;
+    const sheetId = "customPseudoStyle";
+    const head = document.head || document.getElementsByTagName("head")[0];
+    const styleSheet =
+        document.getElementById(sheetId) || document.createElement("style");
+    styleSheet.id = sheetId;
 
     function getRuleValue(rule) {
         let ruleString = "";
         let result = "";
-        for (var key in rule) {
+        for (let key in rule) {
             ruleString += `${key}:${rule[key]};`;
         }
         result = `{${ruleString}}`;
         return result;
     }
-    let styleText = "";
     if (pseudoElement) {
         // pseudo element styling
-        _sheet.appendChild(
+        styleSheet.appendChild(
             document.createTextNode(
                 `${selector}${pseudoElement}${getRuleValue(rule)}`
             )
         );
     } else {
         // normal css
-        _sheet.appendChild(
+        styleSheet.appendChild(
             document.createTextNode(`${selector}${getRuleValue(rule)}`)
         );
     }
-    if (!document.getElementById(_sheetId)) {
-        _head.appendChild(_sheet);
+    if (!document.getElementById(sheetId)) {
+        head.appendChild(styleSheet);
     }
 };
 ```
