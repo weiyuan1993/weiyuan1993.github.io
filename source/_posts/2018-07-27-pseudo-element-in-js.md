@@ -3,8 +3,8 @@ title: 用 JavaScript 操作 CSS 偽元素
 date: 2018-07-27 22:56:23
 categories: JavaScript
 tags:
--  JavaScript
--  CSS
+    - JavaScript
+    - CSS
 ---
 
 若要對一些原生 HTML element (video, input 等等) 修改樣式時，須針對各家瀏覽器前綴字樣的 CSS 偽元素做修改，
