@@ -110,18 +110,18 @@
 
 
 
-  <meta name="description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。 Source code 註冊方式全局註冊123V">
+  <meta name="description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。">
 <meta name="keywords" content="Vue.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Vue] 使用 Directive 來註冊客製化指令">
 <meta property="og:url" content="https://weiyuan1993.github.io/2018/08/17/vue-directive/index.html">
 <meta property="og:site_name" content="V.Lo 學習筆記">
-<meta property="og:description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。 Source code 註冊方式全局註冊123V">
+<meta property="og:description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-18T07:36:56.087Z">
+<meta property="og:updated_time" content="2018-08-18T08:04:09.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Vue] 使用 Directive 來註冊客製化指令">
-<meta name="twitter:description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。 Source code 註冊方式全局註冊123V">
+<meta name="twitter:description" content="Vue Directive最近在上 Udemy 上開設的 Vue.js 課程 - Vue JS 2 - The Complete Guide (incl. Vue Router &amp;amp; Vuex)，講述了 Directive 的利用，覺得滿有趣的。 除了 Vue 自身內建的 v-model， v-show 等等指令，也可以自行註冊客製化的指令。">
 
 
 
@@ -379,7 +379,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2018-08-18 15:36:56" itemprop="dateModified" datetime="2018-08-18T15:36:56+08:00">2018-08-18</time>
+                <time title="Updated at: 2018-08-18 16:04:09" itemprop="dateModified" datetime="2018-08-18T16:04:09+08:00">2018-08-18</time>
               
             
           </span>
@@ -442,6 +442,7 @@
       
         <h1 id="Vue-Directive"><a href="#Vue-Directive" class="headerlink" title="Vue Directive"></a>Vue Directive</h1><p>最近在上 <a href="https://www.udemy.com/" target="_blank" rel="noopener">Udemy</a> 上開設的 Vue.js 課程 - <a href="https://www.udemy.com/vuejs-2-the-complete-guide/" target="_blank" rel="noopener">Vue JS 2 - The Complete Guide (incl. Vue Router &amp; Vuex)</a>，講述了 <code>Directive</code> 的利用，覺得滿有趣的。</p>
 <p>除了 Vue 自身內建的 <code>v-model</code>， <code>v-show</code> 等等指令，也可以自行註冊客製化的指令。</p>
+<a id="more"></a>
 <p><a href="https://github.com/weiyuan1993/vue-complete-guide/tree/master/homework-Directives" target="_blank" rel="noopener">Source code</a></p>
 <h2 id="註冊方式"><a href="#註冊方式" class="headerlink" title="註冊方式"></a>註冊方式</h2><p><strong>全局註冊</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.directive(<span class="string">'hightlight'</span>, &#123;</span><br><span class="line"> <span class="comment">//do something</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p><strong>組件內註冊</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">directives: &#123;</span><br><span class="line">    <span class="string">'highlight'</span>: &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
