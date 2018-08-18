@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="React Router 官方的話: React Router 是完整的React 路由解決方案，React Router 保持UI 與URL 同步。它擁有簡單的API 與強大的功能例如代碼緩衝加載、動態路由匹配、以及建立正確的位置過渡處理。你第一個念頭想到的應該是URL，而不是事後再想起。  前言由於最近練習React時寫了個部落格系統，部落格系統有一點很重要就是需要URL匹配每一篇文章路徑，這">
+<meta name="keywords" content="React,React-Router">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Router學習筆記">
+<meta property="og:url" content="https://weiyuan1993.github.io/2016/06/21/react-router/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="React Router 官方的話: React Router 是完整的React 路由解決方案，React Router 保持UI 與URL 同步。它擁有簡單的API 與強大的功能例如代碼緩衝加載、動態路由匹配、以及建立正確的位置過渡處理。你第一個念頭想到的應該是URL，而不是事後再想起。  前言由於最近練習React時寫了個部落格系統，部落格系統有一點很重要就是需要URL匹配每一篇文章路徑，這">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React-Router學習筆記">
+<meta name="twitter:description" content="React Router 官方的話: React Router 是完整的React 路由解決方案，React Router 保持UI 與URL 同步。它擁有簡單的API 與強大的功能例如代碼緩衝加載、動態路由匹配、以及建立正確的位置過渡處理。你第一個念頭想到的應該是URL，而不是事後再想起。  前言由於最近練習React時寫了個部落格系統，部落格系統有一點很重要就是需要URL匹配每一篇文章路徑，這">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2016/06/21/react-router/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>React-Router學習筆記 | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2016/06/21/react-router/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React-Router學習筆記
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2016-06-21 00:49:26" itemprop="dateCreated datePublished" datetime="2016-06-21T00:49:26+08:00">2016-06-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/21/react-router/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2016/06/21/react-router/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h3><blockquote>
+<p>官方的話: React Router 是完整的React 路由解決方案，React Router 保持UI 與URL 同步。它擁有簡單的API 與強大的功能例如代碼緩衝加載、動態路由匹配、以及建立正確的位置過渡處理。你第一個念頭想到的應該是URL，而不是事後再想起。</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由於最近練習React時寫了個部落格系統，部落格系統有一點很重要就是需要URL匹配每一篇文章路徑，這時使用React-Router就能很輕鬆地分配不同路徑囉</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>新增一個<code>route.js</code>檔設定路由器，<br>引入react-router函式庫中的<code>Route</code>、<code>IndexRoute</code><br>簡易設定如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Route, IndexRoute &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/app'</span>;</span><br><span class="line"><span class="keyword">import</span> PostsIndex <span class="keyword">from</span> <span class="string">'./components/posts_index'</span>;</span><br><span class="line"><span class="keyword">import</span> PostsNew <span class="keyword">from</span> <span class="string">'./components/posts_new'</span>;</span><br><span class="line"><span class="keyword">import</span> PostsShow <span class="keyword">from</span> <span class="string">'./components/posts_show'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Page1 = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;I'm page One.&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> Page2 = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;I'm page Two.&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> Page3 = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;I'm page Three.&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>(</span><br><span class="line">  &lt;Route path=<span class="string">"/"</span> component=&#123;App&#125; &gt;</span><br><span class="line">    &lt;IndexRoute component=&#123;PostsIndex&#125; /&gt; &#123;<span class="comment">/*IndexRoute用來顯示首頁內容*/</span>&#125;</span><br><span class="line">    &lt;Route path=<span class="string">"posts/new"</span> component=&#123;PostsNew&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"posts/:id"</span> component=&#123;PostsShow&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"page1"</span> component=&#123;Page1&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"page2"</span> component=&#123;Page2&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"page3"</span> component=&#123;Page3&#125; /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Route&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<p>主程式<code>index.js</code>裡設定(範例搭配<code>Redux</code>、<code>Material-UI</code>):  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router, browserHistory&#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</span><br><span class="line"><span class="keyword">import</span> reducers <span class="keyword">from</span> <span class="string">'./reducers'</span>;</span><br><span class="line"><span class="keyword">import</span> routes <span class="keyword">from</span> <span class="string">'./route'</span>;</span><br><span class="line"><span class="keyword">import</span> promise <span class="keyword">from</span> <span class="string">'redux-promise'</span>;</span><br><span class="line"><span class="keyword">const</span> createStoreWithMiddleware = applyMiddleware(promise)(createStore);</span><br><span class="line"><span class="keyword">import</span> getMuiTheme <span class="keyword">from</span> <span class="string">'material-ui/styles/getMuiTheme'</span>;</span><br><span class="line"><span class="keyword">import</span> MuiThemeProvider <span class="keyword">from</span> <span class="string">'material-ui/styles/MuiThemeProvider'</span>;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider store=&#123;createStoreWithMiddleware(reducers)&#125;&gt;</span><br><span class="line">    &lt;MuiThemeProvider muiTheme=&#123;getMuiTheme()&#125;&gt;</span><br><span class="line">      &lt;Router history=&#123;browserHistory&#125; routes=&#123;routes&#125; /&gt;</span><br><span class="line">    &lt;<span class="regexp">/MuiThemeProvider&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>Provider&gt;</span><br><span class="line">  , <span class="built_in">document</span>.querySelector(<span class="string">'.container'</span>));</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/React-Router/" rel="tag"># React-Router</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/18/watics-intern-07/" rel="next" title="WATICS維德斯實習-第七周(4/11~4/15)">
+                <i class="fa fa-chevron-left"></i> WATICS維德斯實習-第七周(4/11~4/15)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/28/git-branch/" rel="prev" title="[Git]為專案開Branch">
+                [Git]為專案開Branch <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Router"><span class="nav-number">1.</span> <span class="nav-text">React Router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">3.</span> <span class="nav-text">使用方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2016/06/21/react-router/';
+        this.page.identifier = '2016/06/21/react-router/';
+        this.page.title = 'React-Router學習筆記';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

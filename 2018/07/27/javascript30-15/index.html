@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="15 - LocalStorage筆記DEMOGitHub 實作一個基於 localStorage 儲存的點菜單。">
+<meta name="keywords" content="JavaScript,JavaScript30">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Day15-localStorage 的點菜單">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/07/27/javascript30-15/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="15 - LocalStorage筆記DEMOGitHub 實作一個基於 localStorage 儲存的點菜單。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript30-Day15-localStorage 的點菜單">
+<meta name="twitter:description" content="15 - LocalStorage筆記DEMOGitHub 實作一個基於 localStorage 儲存的點菜單。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/07/27/javascript30-15/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JavaScript30-Day15-localStorage 的點菜單 | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/07/27/javascript30-15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript30-Day15-localStorage 的點菜單
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-07-27 22:30:23" itemprop="dateCreated datePublished" datetime="2018-07-27T22:30:23+08:00">2018-07-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript30/" itemprop="url" rel="index"><span itemprop="name">JavaScript30</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/27/javascript30-15/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2018/07/27/javascript30-15/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="15-LocalStorage"><a href="#15-LocalStorage" class="headerlink" title="15 - LocalStorage"></a>15 - LocalStorage</h1><h2 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h2><p><a href="https://weiyuan1993.github.io/JavaScript30/15-LocalStorage">DEMO</a><br><a href="https://github.com/weiyuan1993/JavaScript30/tree/master/15-LocalStorage" target="_blank" rel="noopener">GitHub</a></p>
+<p>實作一個基於 localStorage 儲存的點菜單。</p>
+<a id="more"></a>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p><code>html</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Food List<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"plates"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Loading Tapas...<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"add-items"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"item"</span> <span class="attr">placeholder</span>=<span class="string">"Item Name"</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"+ Add Item"</span> <span class="attr">id</span>=<span class="string">"add"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>透過一個 <code>ul</code> 將 <code>li</code> 項目包起來，一個 <code>form</code> 來處理表單，使用 <code>required</code> 屬性來限制使用者一定要輸入內容才能提交。</p>
+<p><code>javascript</code></p>
+<p><strong>初始設定，取 DOM，設定餐點清單陣列</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> addItems = <span class="built_in">document</span>.querySelector(<span class="string">".add-items"</span>);</span><br><span class="line"><span class="keyword">const</span> itemsList = <span class="built_in">document</span>.querySelector(<span class="string">".plates"</span>);</span><br><span class="line"><span class="comment">//用來儲存已新增的餐點</span></span><br><span class="line"><span class="keyword">const</span> items = <span class="built_in">JSON</span>.parse(localStorage.getItem(<span class="string">"items"</span>)) || [];</span><br></pre></td></tr></table></figure>
+<p>這邊 <code>items</code> 為所新增的菜，初始為空陣列，待會會用 <code>localStorage</code> 儲存，由於 <code>localStorage</code> 僅能儲存字串，所以這裡必須將 <code>JSON.stringify</code> 過的資料解析回來。</p>
+<p><strong>新增餐點與儲存</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">saveItemsToLocalStorage</span>(<span class="params">toSave</span>) </span>&#123;</span><br><span class="line">    localStorage.setItem(toSave, <span class="built_in">JSON</span>.stringify(items));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addItem</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//取消預設的submit效果</span></span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="keyword">const</span> text = <span class="built_in">document</span>.querySelector(<span class="string">"input[type=text]"</span>).value;</span><br><span class="line">    <span class="keyword">const</span> item = &#123;</span><br><span class="line">        <span class="comment">// ES6 若key value 同名可省略value</span></span><br><span class="line">        text,</span><br><span class="line">        done: <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">    items.push(item);</span><br><span class="line">    populateList(items, itemsList);</span><br><span class="line">    saveItemsToLocalStorage(<span class="string">"items"</span>);</span><br><span class="line">    <span class="comment">//submit 事件的方法</span></span><br><span class="line">    <span class="keyword">this</span>.reset();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 監聽 submit 事件來新增餐點</span></span><br><span class="line">addItems.addEventListener(<span class="string">"submit"</span>, addItem);</span><br></pre></td></tr></table></figure>
+<p><code>submit</code> 發生時，將 input 輸入框的值包成一個 <code>item</code> 物件，裡面用 <code>done</code> 的 key 值表示此項目完成與否，之後這個 <code>item</code> 物件就可 push 進一開始定義的  <code>items</code> 陣列。<br>透過 <code>localstorage.setItem</code>可以將 <code>items</code> 存入，這邊用一個 function 包起來比較方便不用重寫 JSON.stringify。<br> 最後使用 <code>submit</code> 事件的 <code>reset()</code> method 來清空 input 框。</p>
+<p><strong>餐點資料輸出呈現</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將餐點輸出成HTML結構, plates初始為空陣列</span></span><br><span class="line"><span class="comment">// 不直接使用 items 是因為讓這個function 更有彈性，可傳入任何陣列</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">populateList</span>(<span class="params">plates = [], platesList</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// innerHTML 只吃 string 必須透過 join('') 合併陣列</span></span><br><span class="line">    platesList.innerHTML = plates</span><br><span class="line">        .map(<span class="function">(<span class="params">plate, i</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;li&gt;</span></span><br><span class="line"><span class="string">        &lt;input type="checkbox" data-index=<span class="subst">$&#123;i&#125;</span> id="item<span class="subst">$&#123;i&#125;</span>" <span class="subst">$&#123;</span></span></span><br><span class="line"><span class="string"><span class="subst">                plate.done ? <span class="string">"checked"</span> : <span class="string">""</span></span></span></span><br><span class="line"><span class="string"><span class="subst">            &#125;</span> /&gt;</span></span><br><span class="line"><span class="string">        &lt;label for="item<span class="subst">$&#123;i&#125;</span>"&gt;<span class="subst">$&#123;plate.text&#125;</span>&lt;/label&gt;</span></span><br><span class="line"><span class="string">        &lt;button class="delete" id="delete<span class="subst">$&#123;i&#125;</span>"&gt;Delete&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;/li&gt;</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">        &#125;)</span><br><span class="line">        .join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>populateList</code> 傳入餐點陣列與需要渲染的 <code>element</code>，透過 <code>map()</code>來迭代操作  <code>items</code>，而<code>map</code>的回調函式第二個帶入的參數為迴圈的 <code>index</code>，剛好可以用來為每個 element 綁定個別的 <code>id</code>，之後比較好抓取操作。</p>
+<p>這邊因為使用 template string，可以很方便使用三元判斷式來做是否綁定 <code>checked</code> 屬性。</p>
+<p><strong>完成餐點與取消完成</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleDone</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//因為是監聽 ul ，所以同時會 trigger 到 input 和 label，這邊只需要 input</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (e.target.matches(<span class="string">"label"</span>)) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> element = e.target;</span><br><span class="line">    <span class="keyword">const</span> index = element.dataset.index;</span><br><span class="line">    <span class="keyword">if</span> (element.matches(<span class="string">"input"</span>) || element.matches(<span class="string">"label"</span>)) &#123;</span><br><span class="line">        items[index].done = !items[index].done;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (element.matches(<span class="string">"button"</span>)) &#123;</span><br><span class="line">        items.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    saveItemsToLocalStorage(<span class="string">"items"</span>);</span><br><span class="line">    populateList(items, itemsList);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//監聽整個 ul 就能監聽全部 li</span></span><br><span class="line">itemsList.addEventListener(<span class="string">"click"</span>, toggleDone);</span><br></pre></td></tr></table></figure>
+<p>如果使用迴圈個別監聽每個 <code>li</code>，會造成後來新增的餐點監聽不到，這邊監聽整個 <code>ul</code> 就可以監聽所有底下的元素。<br>透過 event.target 來區別監聽到的元素，如果點擊到 input checkbox，利用  渲染時綁定的  <code>data-index</code> 選取 <code>items</code> 陣列對應的資料， 將 <code>done</code> 反值。<br>監聽到刪除按鈕就透過 <code>splice()</code> 刪除對應的資料，最後再存一次檔，並重新渲染餐點列表一次。</p>
+<p></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/19/javascript30-13/" rel="next" title="JavaScript30-Day13-讓圖片在可視範圍內才滑入顯示">
+                <i class="fa fa-chevron-left"></i> JavaScript30-Day13-讓圖片在可視範圍內才滑入顯示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/27/pseudo-element-in-js/" rel="prev" title="用 JavaScript 操作 CSS 偽元素">
+                用 JavaScript 操作 CSS 偽元素 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#15-LocalStorage"><span class="nav-number">1.</span> <span class="nav-text">15 - LocalStorage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#筆記"><span class="nav-number">1.1.</span> <span class="nav-text">筆記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法"><span class="nav-number">1.2.</span> <span class="nav-text">作法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2018/07/27/javascript30-15/';
+        this.page.identifier = '2018/07/27/javascript30-15/';
+        this.page.title = 'JavaScript30-Day15-localStorage 的點菜單';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

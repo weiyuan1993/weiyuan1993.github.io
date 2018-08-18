@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="開始工作以後，常常覺得自己越來越局限於工作上的學習，下班後也沒動力進修，最近決定好好改變這個情況，首先就從翻新部落格來開始，有漂亮好寫的部落格應該會更有動力學習紀錄吧！ 這篇將完整記錄我從 jekyll 搬移至 HEXO 的過程與遇到的坑。">
+<meta name="keywords" content="HEXO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="將部落格搬移到HEXO">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/06/09/move-blog-to-hexo/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="開始工作以後，常常覺得自己越來越局限於工作上的學習，下班後也沒動力進修，最近決定好好改變這個情況，首先就從翻新部落格來開始，有漂亮好寫的部落格應該會更有動力學習紀錄吧！ 這篇將完整記錄我從 jekyll 搬移至 HEXO 的過程與遇到的坑。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:56:55.263Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="將部落格搬移到HEXO">
+<meta name="twitter:description" content="開始工作以後，常常覺得自己越來越局限於工作上的學習，下班後也沒動力進修，最近決定好好改變這個情況，首先就從翻新部落格來開始，有漂亮好寫的部落格應該會更有動力學習紀錄吧！ 這篇將完整記錄我從 jekyll 搬移至 HEXO 的過程與遇到的坑。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/06/09/move-blog-to-hexo/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>將部落格搬移到HEXO | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/06/09/move-blog-to-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">將部落格搬移到HEXO
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-09 22:11:11" itemprop="dateCreated datePublished" datetime="2018-06-09T22:11:11+08:00">2018-06-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:56:55" itemprop="dateModified" datetime="2018-08-18T11:56:55+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/09/move-blog-to-hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2018/06/09/move-blog-to-hexo/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>開始工作以後，常常覺得自己越來越局限於工作上的學習，下班後也沒動力進修，最近決定好好改變這個情況，首先就從翻新部落格來開始，有漂亮好寫的部落格應該會更有動力學習紀錄吧！</p>
+<p>這篇將完整記錄我從 jekyll 搬移至 HEXO 的過程與遇到的坑。</p>
+<a id="more"></a>
+<h2 id="HEXO-安裝與啟用"><a href="#HEXO-安裝與啟用" class="headerlink" title="HEXO 安裝與啟用"></a>HEXO 安裝與啟用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br><span class="line">$ hexo init weiyuan1993.github.io</span><br><span class="line">$ <span class="built_in">cd</span> weiyuan1993.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="部署到-GitHub-遇到的問題"><a href="#部署到-GitHub-遇到的問題" class="headerlink" title="部署到 GitHub 遇到的問題"></a>部署到 GitHub 遇到的問題</h2><p>HEXO 的部署跟 jekyll 比較不一樣是透過 HEXO 自己的部署工具<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
+<p>而有個很大不同是，透過此法部署僅會將 HEXO 生成好的靜態檔案推送到 GitHub master，其餘檔案包括設定檔<code>_config.yml</code>，文章 markdown 檔、主題設定等全部都不會推送，對於日後如果更換電腦或是想在其他地方寫作會造成很大麻煩。</p>
+<p>於是在網路上找到了還不錯的解法:<br><a href="https://devtian.me/2015/03/17/blog-sync-solution/" target="_blank" rel="noopener">https://devtian.me/2015/03/17/blog-sync-solution/</a></p>
+<p>簡單來說就是將想要保存的 source (HEXO 站點資料)，開一個分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">$ git checkout -b <span class="built_in">source</span></span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"first commit"</span> </span><br><span class="line"> //這邊我沒用 https 的形式會報錯說 permission denied</span><br><span class="line">$ git remote add origin https://github.com/weiyuan1993/weiyuan1993.github.io.git</span><br><span class="line">$ git push origin <span class="built_in">source</span></span><br></pre></td></tr></table></figure></p>
+<p>之後如果有寫新文章，更動設定檔就推倒 source 分支即可。<br>在<code>_config.yml</code>需設定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/weiyuan1993/weiyuan1993.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">  # 下面這行一定要加不然無法 generate</span><br><span class="line">  message: &quot;&#123;&#123; now(&apos;YYYY-MM-DD HH:mm:ss&apos;) &#125;&#125; &quot;</span><br></pre></td></tr></table></figure></p>
+<p>這樣執行<code>hexo deploy</code>就能將靜態檔案推送到<code>master</code>了，因為 GitHub 默認使用 master 當作 GitHub Page</p>
+<h2 id="主題管理"><a href="#主題管理" class="headerlink" title="主題管理"></a>主題管理</h2><p>我使用簡約的 NexT 主題，直接透過 git clone 方式安裝到站點<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/theme-next/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure></p>
+<p>在 <code>_config.yml</code> 設定 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure></p>
+<p>為了之後可以隨時使用 git pull 更新主題，我採用 HEXO 的 <code>Data files</code> feature：</p>
+<p>從 <code>主題的 _config.yml</code> 文件中複製所有設定到  <code>HEXO 的 _config.yml</code> 中，然後在這些參數最上方添加一行 <code>theme_config :</code>，並將所有參數縮排兩空格以符合 yml 格式</p>
+<p>使用此一方式可以很輕鬆地只要管理一份 HEXO 的<code>_config.yml</code> 即可，也可以推送到 GitHub 保存，這樣在 pull 第三方的 NexT repo 才不容易出現問題(如果有更動檔案的話)。</p>
+<p>之後換電腦或是在別的電腦想寫文章，直接 clone source 分支，這樣就包含了設定好的 <code>_config.yml</code> 和乾淨的主題配置。</p>
+<h2 id="換電腦寫文章初始設定"><a href="#換電腦寫文章初始設定" class="headerlink" title="換電腦寫文章初始設定"></a>換電腦寫文章初始設定</h2><p>經實測發現 clone 下來的 主題會是空的，所以須補上 clone 主題</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone -b source https://github.com/weiyuan1993/weiyuan1993.github.io.git</span><br><span class="line">$ npm run init</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md" target="_blank" rel="noopener">參考資料</a></p>
+<h2 id="新增-categories、about、tags-等頁面"><a href="#新增-categories、about、tags-等頁面" class="headerlink" title="新增 categories、about、tags 等頁面"></a>新增 categories、about、tags 等頁面</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br><span class="line">$ hexo new page about</span><br><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
+<p>執行完會在站點 source 新增三個 .md，修改如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2018-06-09 21:56:22</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<p>以此類推</p>
+<h2 id="設定-favicons"><a href="#設定-favicons" class="headerlink" title="設定 favicons"></a>設定 favicons</h2><p>新增 <code>source/favicons</code> 資料夾，將所需圖檔放入，並在 <code>_config.yml</code> 主題設定區設定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  url: /favicons/favicon.png</span><br><span class="line">favicon:</span><br><span class="line">  small: /favicons/favicon-16x16.png</span><br><span class="line">  medium: /favicons/favicon-32x32.png</span><br><span class="line">  apple_touch_icon: /favicons/apple-icon-180x180.png</span><br><span class="line">  safari_pinned_tab: /favicons/apple-icon-180x180.png</span><br></pre></td></tr></table></figure></p>
+<h2 id="新增-DISQUS-留言板功能"><a href="#新增-DISQUS-留言板功能" class="headerlink" title="新增 DISQUS 留言板功能"></a>新增 DISQUS 留言板功能</h2><p>先去 <a href="https://disqus.com/" target="_blank" rel="noopener">DISQUS</a> 官網辦帳號，設定 shortname，並在 <code>_config.yml</code> 主題設定區設定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Disqus</span><br><span class="line">disqus:</span><br><span class="line">  enable: true</span><br><span class="line">  shortname: weiyuan1993</span><br><span class="line">  count: true</span><br><span class="line">  lazyload: false</span><br></pre></td></tr></table></figure></p>
+<h2 id="Read-more-功能"><a href="#Read-more-功能" class="headerlink" title="Read more 功能"></a>Read more 功能</h2><p>在 Next 主題的 <code>_config.yml</code>設定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure></p>
+<p>此法如果遇到 code highlight 會造成首頁不正常顯示，解決方法如下：</p>
+<p>在要隱藏的文章內容前加上<br><code>&lt;!-- more --&gt;</code></p>
+<h2 id="常用指令與寫文章流程"><a href="#常用指令與寫文章流程" class="headerlink" title="常用指令與寫文章流程"></a>常用指令與寫文章流程</h2><h3 id="一般寫文章"><a href="#一般寫文章" class="headerlink" title="一般寫文章"></a>一般寫文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new post 標題</span><br><span class="line">$ hexo server // or hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate //or hexo g</span><br><span class="line">$ hexo deploy //or hexo d</span><br><span class="line"></span><br><span class="line">//生成完推送</span><br><span class="line">$ hexo generate -d</span><br></pre></td></tr></table></figure>
+<h3 id="清快取"><a href="#清快取" class="headerlink" title="清快取"></a>清快取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+<h3 id="推送文章原始檔及網站"><a href="#推送文章原始檔及網站" class="headerlink" title="推送文章原始檔及網站"></a>推送文章原始檔及網站</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new post 標題</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;new post&quot;</span><br><span class="line">$ git push origin source</span><br><span class="line">$ hexo generate -d</span><br></pre></td></tr></table></figure>
+<h3 id="懶人指令"><a href="#懶人指令" class="headerlink" title="懶人指令"></a>懶人指令</h3><p>直接用 <code>package.json</code> 寫了快速指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;init&quot;: &quot;git clone https://github.com/theme-next/hexo-theme-next.git themes/next &amp;&amp; npm install&quot;,</span><br><span class="line">  &quot;update&quot;: &quot;git pull origin source&quot;,</span><br><span class="line">  &quot;start&quot;: &quot;hexo s&quot;,</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo generate -d&quot;,</span><br><span class="line">  &quot;push_source&quot;: &quot;git add . &amp;&amp; git commit -m &apos;update&apos; &amp;&amp; git push origin source&quot;,</span><br><span class="line">  &quot;deploy_push_source&quot;: &quot;git add . &amp;&amp; git commit -m &apos;update&apos; &amp;&amp; git push origin source &amp;&amp; hexo generate -d&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><code>npm run init</code>: git clone 下來初始化設定</li>
+<li><code>npm run update</code>: pull 最新的 source 分支</li>
+<li><code>npm run start</code>: 啟動 server</li>
+<li><code>npm run deploy</code>: 生成後發佈</li>
+<li><code>npm run push_source</code>: push 更動後的 source 檔</li>
+<li><code>npm deploy_push_source</code>: push 更動後的 source 檔，並且發佈到網站</li>
+</ol>
+<p>折騰了一天，終於大功告成，中間還裝了兩次ＱＱ </p>
+<h2 id="SEO優化"><a href="#SEO優化" class="headerlink" title="SEO優化"></a>SEO優化</h2><h3 id="設定-Google-分析與-search-console"><a href="#設定-Google-分析與-search-console" class="headerlink" title="設定 Google 分析與 search console"></a>設定 Google 分析與 search console</h3><p>為了解決無法搜尋到部落格的問題，先去<a href="https://www.google.com/webmasters/" target="_blank" rel="noopener">Google Webmaster</a>新增網址，選擇其他方式裡使用 html 標記的方式，複製<code>&lt;meta&gt;</code>標記的<code>content</code>字串，接著在<code>_config.yml</code>裡貼上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">google_site_verification: xxxxxxxxxxxxxxxxxxxxxx</span><br><span class="line"></span><br><span class="line">GA則是貼上：</span><br><span class="line">google_analytics: UA-XXXXXXXX</span><br></pre></td></tr></table></figure></p>
+<p>點選驗證網站後，即大功告成</p>
+<p></p>
+<h3 id="新增-sitemap-xml"><a href="#新增-sitemap-xml" class="headerlink" title="新增 sitemap.xml"></a>新增 sitemap.xml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
+<p>在站點的 <code>_config.yml</code> 設定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sitemap: </span><br><span class="line">  path: sitemap.xml</span><br></pre></td></tr></table></figure></p>
+<p>之後重新產生網站時就會多一個 sitemap.xml 檔案，再來到 search console 提交 sitemap.xml 及完成。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HEXO/" rel="tag"># HEXO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/08/frontend-test/" rel="next" title="JavaScript 實務測試新手班學習筆記">
+                <i class="fa fa-chevron-left"></i> JavaScript 實務測試新手班學習筆記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/19/javascript30-01/" rel="prev" title="JavaScript30-Day1-鍵盤來打鼓">
+                JavaScript30-Day1-鍵盤來打鼓 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO-安裝與啟用"><span class="nav-number">1.</span> <span class="nav-text">HEXO 安裝與啟用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署到-GitHub-遇到的問題"><span class="nav-number">2.</span> <span class="nav-text">部署到 GitHub 遇到的問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主題管理"><span class="nav-number">3.</span> <span class="nav-text">主題管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#換電腦寫文章初始設定"><span class="nav-number">4.</span> <span class="nav-text">換電腦寫文章初始設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新增-categories、about、tags-等頁面"><span class="nav-number">5.</span> <span class="nav-text">新增 categories、about、tags 等頁面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定-favicons"><span class="nav-number">6.</span> <span class="nav-text">設定 favicons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新增-DISQUS-留言板功能"><span class="nav-number">7.</span> <span class="nav-text">新增 DISQUS 留言板功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read-more-功能"><span class="nav-number">8.</span> <span class="nav-text">Read more 功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令與寫文章流程"><span class="nav-number">9.</span> <span class="nav-text">常用指令與寫文章流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般寫文章"><span class="nav-number">9.1.</span> <span class="nav-text">一般寫文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送"><span class="nav-number">9.2.</span> <span class="nav-text">推送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清快取"><span class="nav-number">9.3.</span> <span class="nav-text">清快取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送文章原始檔及網站"><span class="nav-number">9.4.</span> <span class="nav-text">推送文章原始檔及網站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懶人指令"><span class="nav-number">9.5.</span> <span class="nav-text">懶人指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEO優化"><span class="nav-number">10.</span> <span class="nav-text">SEO優化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#設定-Google-分析與-search-console"><span class="nav-number">10.1.</span> <span class="nav-text">設定 Google 分析與 search console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-sitemap-xml"><span class="nav-number">10.2.</span> <span class="nav-text">新增 sitemap.xml</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2018/06/09/move-blog-to-hexo/';
+        this.page.identifier = '2018/06/09/move-blog-to-hexo/';
+        this.page.title = '將部落格搬移到HEXO';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

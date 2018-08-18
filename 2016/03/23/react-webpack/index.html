@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近想要學習React這個火紅的javascript libarary來運用到工作上面，因為對於他的設計理念很感興趣，無奈於網路上找到的環境建置流程都殘缺不全，沒有一個完整的教學。 React官方網站有建議使用npm來安裝並且搭配module system(webpack、 browserify)環境，但一開始接觸完全搞不懂那些是什麼東西，就先使用Starter kit來用，只是學習一樣新東西，如">
+<meta name="keywords" content="React,Webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React開發環境建置以及webpack的使用">
+<meta property="og:url" content="https://weiyuan1993.github.io/2016/03/23/react-webpack/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="最近想要學習React這個火紅的javascript libarary來運用到工作上面，因為對於他的設計理念很感興趣，無奈於網路上找到的環境建置流程都殘缺不全，沒有一個完整的教學。 React官方網站有建議使用npm來安裝並且搭配module system(webpack、 browserify)環境，但一開始接觸完全搞不懂那些是什麼東西，就先使用Starter kit來用，只是學習一樣新東西，如">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React開發環境建置以及webpack的使用">
+<meta name="twitter:description" content="最近想要學習React這個火紅的javascript libarary來運用到工作上面，因為對於他的設計理念很感興趣，無奈於網路上找到的環境建置流程都殘缺不全，沒有一個完整的教學。 React官方網站有建議使用npm來安裝並且搭配module system(webpack、 browserify)環境，但一開始接觸完全搞不懂那些是什麼東西，就先使用Starter kit來用，只是學習一樣新東西，如">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2016/03/23/react-webpack/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>React開發環境建置以及webpack的使用 | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2016/03/23/react-webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React開發環境建置以及webpack的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2016-03-23 20:48:26" itemprop="dateCreated datePublished" datetime="2016-03-23T20:48:26+08:00">2016-03-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/23/react-webpack/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2016/03/23/react-webpack/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近想要學習React這個火紅的javascript libarary來運用到工作上面，因為對於他的設計理念很感興趣，無奈於網路上找到的環境建置流程都殘缺不全，沒有一個完整的教學。</p>
+<p>React官方網站有建議使用npm來安裝並且搭配module system(webpack、 browserify)環境，但一開始接觸完全搞不懂那些是什麼東西，就先使用Starter kit來用，只是學習一樣新東西，如果連安裝環境都不會建置，那也甭學了!</p>
+<p>後來終於在國外網站友人分享<a href="https://www.twilio.com/blog/2015/08/setting-up-react-for-es6-with-webpack-and-babel-2.html" target="_blank" rel="noopener">Setting up React for ES6 with Webpack and Babel</a><br>完全是我要的東西啊! 他這篇教學教我透過npm來安裝React，並且透過Babel轉譯ES6語法，真是一舉兩得，廢話不多說，來看一下流程吧。</p>
+<h3 id="開始之前"><a href="#開始之前" class="headerlink" title="開始之前"></a>開始之前</h3><p>必要工具:Node.js、npm</p>
+<p>在Win 10系統上的Node.js是自帶npm的，不用特別去下載</p>
+<hr>
+<h3 id="建置資料夾"><a href="#建置資料夾" class="headerlink" title="建置資料夾"></a>建置資料夾</h3><p>在喜歡的地方新增資料夾，並且透過npm初始化</p>
+<pre><code>npm init
+</code></pre><p>這樣會在資料夾內產生package.json，可以讓我們紀錄需要哪些node_modules。</p>
+<h3 id="安裝React"><a href="#安裝React" class="headerlink" title="安裝React"></a>安裝React</h3><pre><code>npm install --save react
+npm install --save react-dom
+</code></pre><p>這樣會在node_modules資料夾內安裝react的檔案</p>
+<h3 id="安裝Webpack"><a href="#安裝Webpack" class="headerlink" title="安裝Webpack"></a>安裝Webpack</h3><p>我們還需要安裝Webpack來把檔案打捆(bundle)起來，以及Webpack development server來建置本地開發伺服器</p>
+<pre><code>npm install --save-dev webpack
+npm install webpack-dev-server -g
+</code></pre><p>–save</p>
+<p>會只會安裝在資料夾內，也可<code>npm install webpack -g</code>安裝到全域</p>
+<h3 id="安裝Babel"><a href="#安裝Babel" class="headerlink" title="安裝Babel"></a>安裝Babel</h3><p>Babel是用來幫助我們轉譯ES6語法以及React會用到的JSX語法，因為這些瀏覽器都還不支援，所以要透過轉譯器來轉換成舊的語法讓瀏覽器讀取。</p>
+<pre><code>npm install --save-dev babel-loader
+npm install --save-dev babel-core
+npm install --save-dev babel-preset-es2015
+npm install --save-dev babel-preset-react
+</code></pre><h3 id="建立第一個component"><a href="#建立第一個component" class="headerlink" title="建立第一個component"></a>建立第一個component</h3><p>上述基本上就結束react的安裝了，現在動手寫第一個元件(components)測試看看吧。</p>
+<p>在React，components是獨立的building blocks，用來呈現View，這也就是react官網說他們是MVC架構裡的V(view)，react透過元件的狀態改變來自動渲染。</p>
+<p>在資料夾內用編輯器<strong>建立一個新檔案hello.jsx</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;h1&gt;Hello&lt;/h1&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Hello/&gt;, <span class="built_in">document</span>.getElementById(<span class="string">'hello'</span>));</span><br></pre></td></tr></table></figure>
+<p>此為ES6寫法，也可以用ES5的<code>React.createClass</code><br>再建立另一個檔案<strong>world.jsx</strong>到資料夾</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">World</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;h1&gt;World&lt;/h1&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">ReactDOM.render(&lt;World/&gt;, <span class="built_in">document</span>.getElementById(<span class="string">'world'</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="建立index-html"><a href="#建立index-html" class="headerlink" title="建立index.html"></a>建立index.html</h3><p>我們需要一個html來呈現網站，並且含有兩個div(hello、world)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello React<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"hello"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"world"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bundle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>等等會提到為何要載入bundle.js這個檔案</p>
+<h3 id="Bundling-everything-with-Webpack"><a href="#Bundling-everything-with-Webpack" class="headerlink" title="Bundling everything with Webpack!"></a>Bundling everything with Webpack!</h3><h4 id="先建立一個新檔案main-js"><a href="#先建立一個新檔案main-js" class="headerlink" title="先建立一個新檔案main.js"></a>先建立一個新檔案<strong>main.js</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Hello <span class="keyword">from</span> <span class="string">'./hello.jsx'</span>;</span><br><span class="line"><span class="keyword">import</span> World <span class="keyword">from</span> <span class="string">'./world.jsx'</span>;</span><br></pre></td></tr></table></figure>
+<p>import剛剛寫的兩個元件到main.js</p>
+<h4 id="設定webpack"><a href="#設定webpack" class="headerlink" title="設定webpack"></a>設定webpack</h4><p>建立webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"> </span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./main.js'</span>,</span><br><span class="line">  output: &#123; <span class="attr">path</span>: __dirname, <span class="attr">filename</span>: <span class="string">'bundle.js'</span> &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    loaders: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/.jsx?$/</span>,</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        query: &#123;</span><br><span class="line">          presets: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>entry是進入點，webpack會進入這個檔案把所有元件bundle起來output出bundle.js，index.html再載入這個bundle.js來取用所有元件。</p>
+<p>loaders用來設定如何轉譯檔案，這個例子裡面我們設定轉譯ES6和React的JSX。</p>
+<h3 id="啟動webpack-server"><a href="#啟動webpack-server" class="headerlink" title="啟動webpack server"></a>啟動webpack server</h3><p>webpack最常用的指令</p>
+<pre><code>webpack-dev-server --progress --colors
+</code></pre><p>執行後webpack會build你所有的code，並啟動server，啟動後所有檔案的改動也會即時編譯讓你在瀏覽器馬上看到成果不須重新整理。</p>
+<p>現在進入<a href="http://localhost:8080/webpack-dev-server/" target="_blank" rel="noopener">http://localhost:8080/webpack-dev-server/</a>就可以進入webpack開發者模式囉</p>
+<p>今天就到這邊，之後再來研究Redux framework來結合react囉!</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/21/markdown/" rel="next" title="[Markdown]常用語法筆記">
+                <i class="fa fa-chevron-left"></i> [Markdown]常用語法筆記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/25/watics-intern-04/" rel="prev" title="WATICS維德斯實習-第四周(3/21~3/25)">
+                WATICS維德斯實習-第四周(3/21~3/25) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#開始之前"><span class="nav-number">1.</span> <span class="nav-text">開始之前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建置資料夾"><span class="nav-number">2.</span> <span class="nav-text">建置資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝React"><span class="nav-number">3.</span> <span class="nav-text">安裝React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝Webpack"><span class="nav-number">4.</span> <span class="nav-text">安裝Webpack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝Babel"><span class="nav-number">5.</span> <span class="nav-text">安裝Babel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立第一個component"><span class="nav-number">6.</span> <span class="nav-text">建立第一個component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立index-html"><span class="nav-number">7.</span> <span class="nav-text">建立index.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bundling-everything-with-Webpack"><span class="nav-number">8.</span> <span class="nav-text">Bundling everything with Webpack!</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先建立一個新檔案main-js"><span class="nav-number">8.1.</span> <span class="nav-text">先建立一個新檔案main.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定webpack"><span class="nav-number">8.2.</span> <span class="nav-text">設定webpack</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟動webpack-server"><span class="nav-number">9.</span> <span class="nav-text">啟動webpack server</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2016/03/23/react-webpack/';
+        this.page.identifier = '2016/03/23/react-webpack/';
+        this.page.title = 'React開發環境建置以及webpack的使用';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="不知不覺實習快滿一個月了，越來越熟悉這裡的步調，也喜歡上了工作的環境，不大的空間，卻有溫暖的裝潢與簡約的布置。 在維德斯裡，我認識了負責後端的Ken，負責UI設計的Alan，很喜歡蘋果的Reed，同時也負責iOS開發，還有開發的領導也是面試我的甫華，負責整個產品的領導，以及公司唯二的女生Viola和Vicky，厚厚還有最近新來的帥哥運動編輯Allen。    這個禮拜繼續開發公司的文章網站，上禮拜">
+<meta name="keywords" content="Intern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WATICS維德斯實習-第四周(3&#x2F;21~3&#x2F;25)">
+<meta property="og:url" content="https://weiyuan1993.github.io/2016/03/25/watics-intern-04/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="不知不覺實習快滿一個月了，越來越熟悉這裡的步調，也喜歡上了工作的環境，不大的空間，卻有溫暖的裝潢與簡約的布置。 在維德斯裡，我認識了負責後端的Ken，負責UI設計的Alan，很喜歡蘋果的Reed，同時也負責iOS開發，還有開發的領導也是面試我的甫華，負責整個產品的領導，以及公司唯二的女生Viola和Vicky，厚厚還有最近新來的帥哥運動編輯Allen。    這個禮拜繼續開發公司的文章網站，上禮拜">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WATICS維德斯實習-第四周(3&#x2F;21~3&#x2F;25)">
+<meta name="twitter:description" content="不知不覺實習快滿一個月了，越來越熟悉這裡的步調，也喜歡上了工作的環境，不大的空間，卻有溫暖的裝潢與簡約的布置。 在維德斯裡，我認識了負責後端的Ken，負責UI設計的Alan，很喜歡蘋果的Reed，同時也負責iOS開發，還有開發的領導也是面試我的甫華，負責整個產品的領導，以及公司唯二的女生Viola和Vicky，厚厚還有最近新來的帥哥運動編輯Allen。    這個禮拜繼續開發公司的文章網站，上禮拜">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2016/03/25/watics-intern-04/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WATICS維德斯實習-第四周(3/21~3/25) | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2016/03/25/watics-intern-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">WATICS維德斯實習-第四周(3/21~3/25)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2016-03-25 23:48:26" itemprop="dateCreated datePublished" datetime="2016-03-25T23:48:26+08:00">2016-03-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Intern/" itemprop="url" rel="index"><span itemprop="name">Intern</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/25/watics-intern-04/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2016/03/25/watics-intern-04/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不知不覺實習快滿一個月了，越來越熟悉這裡的步調，也喜歡上了工作的環境，不大的空間，卻有溫暖的裝潢與簡約的布置。</p>
+<p>在維德斯裡，我認識了負責後端的Ken，負責UI設計的Alan，很喜歡蘋果的Reed，同時也負責iOS開發，還有開發的領導也是面試我的甫華，負責整個產品的領導，以及公司唯二的女生Viola和Vicky，厚厚還有最近新來的帥哥運動編輯Allen。  </p>
+<hr>
+<p>這個禮拜繼續開發公司的文章網站，上禮拜是用最基本方法，先刻HTML的Layout，再用jQuery的ajax來接後端API的文章資料。這是最傳統最直接的寫法，無須用到任何framework，但是缺點是後期維護、修改程式碼會越來越困難，雖然我只是寫個小專案，但希望自己能學習一些不一樣的工具，所以就邊碰之前就很想學的react邊寫啦!</p>
+<p>一開始使用react的starter kit編寫react，但後來發現有<strong>Webpack</strong>套件可以讓我們打包各類js檔案，並且可以安裝轉譯器，react安裝最麻煩的就是他必須轉譯JSX語法給瀏覽器，否則瀏覽器無法讀取，而Weboack要裝這些東西都非常容易，幾個指令就能完成，我也寫了一篇文章來記錄安裝過程。</p>
+<p>React最大的特色就是元件化，任何一個有功能的東西都可以把它做成元件，像是我的文章網站劃分為好幾個區域，有導航列、文章圖片和標題、文章內容、作者、熱門文章列、臉書粉絲專業區塊等，那我就可以透過<code>React.createClass</code>來創造這些元件區塊，各元件只負責自己的功能，這樣在管理上非常方便且一目了然。</p>
+<p>由於一開始React還不太熟練，所以先搭配jQuery來寫(熟練的話，基本上不需要jQuery)，主要是要使用$.ajax來連接後端API的文章資料。每篇文章都有一串id，附加在網址後面，所以必須用javascript取得當前URL，並用javascript的split功能拆分字串，只取得需要的id。接下來透過ajax獲取遠端json檔案，裏頭包括圖片、標題、作者、內容等。</p>
+<p>jQuery可以很直覺方便的操作DOM(違反react精神哈哈)，我可以將獲取的資料利用<code>append()</code>或是<code>text()</code>來輸出到我的介面上，速度也很快。</p>
+<p>但是後來覺得自己這樣不行，該來用react的精神下去了，因此我花了些時間研究react元件的互動，將ajax部分移到主要文章顯示內，並在那裏再區分文章圖片和標題、作者、內容等小元件。</p>
+<pre><code>-FullView(整體架構)
+    -Nav(導航列)
+        -Dropdown(手機版的更多按鈕)
+    -Article_view(文章顯示架構)
+        -Article-Img(文章圖片)
+        -Author(作者)
+            -Heart(未來的喜歡功能)
+        -Article_Content(文章內文)
+    -Article_List(熱門文章列表)
+    -Fbfans(FB粉絲專業)
+</code></pre><p>四大區塊，可以一目了然整個網頁的架構，要新增功能或修改都非常方便。React有個最重要的精神就是state，透過監測當前狀態是否有改變來更新DOM，使用<code>this.setState</code>就可以改變狀態，而子元件可以透過<code>this.props</code>來取得父元件元素。</p>
+<p>例如我在Article_view先使用<code>getInitialState</code>初始化狀態，return data為空陣列，接者寫<code>loadArticleData()</code>來使用ajax連接API，並放入<code>componentDidMount</code>裡(表示DOM載入完畢後會執行這項操作)，並在獲得遠端data時，使用<code>this.setState({data:data.article})</code>(json的文章資料在article底下)，以此更新狀態，表示目前data有東西進來了，改變了初始狀態，這時，react就會自動重新調用<code>render</code>，重新渲染一次有改變狀態的DOM，那麼我就將要顯示的區塊，使用this.state綁定資料，這樣ajax擷取資料一完成，就會將資料顯示上去了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Intern/" rel="tag"># Intern</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/23/react-webpack/" rel="next" title="React開發環境建置以及webpack的使用">
+                <i class="fa fa-chevron-left"></i> React開發環境建置以及webpack的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/18/watics-intern-05-06/" rel="prev" title="WATICS維德斯實習-第五~六周(3/28~4/08)">
+                WATICS維德斯實習-第五~六周(3/28~4/08) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2016/03/25/watics-intern-04/';
+        this.page.identifier = '2016/03/25/watics-intern-04/';
+        this.page.title = 'WATICS維德斯實習-第四周(3/21~3/25)';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

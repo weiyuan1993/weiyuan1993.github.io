@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="04 - Array Cardio Day 1GitHubDEMO(需開 console) 筆記Array 的各種操作練習。">
+<meta name="keywords" content="JavaScript,JavaScript30">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Day4-陣列操作使用1">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/06/19/javascript30-04/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="04 - Array Cardio Day 1GitHubDEMO(需開 console) 筆記Array 的各種操作練習。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/3EtLpwN.png">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript30-Day4-陣列操作使用1">
+<meta name="twitter:description" content="04 - Array Cardio Day 1GitHubDEMO(需開 console) 筆記Array 的各種操作練習。">
+<meta name="twitter:image" content="https://i.imgur.com/3EtLpwN.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/06/19/javascript30-04/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JavaScript30-Day4-陣列操作使用1 | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/06/19/javascript30-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript30-Day4-陣列操作使用1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-06-19 22:20:05" itemprop="dateCreated datePublished" datetime="2018-06-19T22:20:05+08:00">2018-06-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript30/" itemprop="url" rel="index"><span itemprop="name">JavaScript30</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/19/javascript30-04/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2018/06/19/javascript30-04/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="04-Array-Cardio-Day-1"><a href="#04-Array-Cardio-Day-1" class="headerlink" title="04 - Array Cardio Day 1"></a>04 - Array Cardio Day 1</h1><p><a href="https://weiyuan1993.github.io/JavaScript30/04-Array-Cardio-Day1/">GitHub</a><br><a href="https://github.com/weiyuan1993/JavaScript30/tree/master/04-Array-Cardio-Day1" target="_blank" rel="noopener">DEMO(需開 console)</a></p>
+<h2 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h2><p>Array 的各種操作練習。</p>
+<a id="more"></a>
+<h3 id="console-table"><a href="#console-table" class="headerlink" title="console.table()"></a>console.table()</h3><p>可輸出表格形式，方便觀看陣列。<br><img src="https://i.imgur.com/3EtLpwN.png" alt="Imgur"></p>
+<h3 id="Arrow-function"><a href="#Arrow-function" class="headerlink" title="Arrow function"></a>Arrow function</h3><p>此篇練習大量使用到箭頭函式，這邊紀錄一下該注意的事項。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因沒加刮號，不需寫 return 及代表 return</span></span><br><span class="line"><span class="keyword">const</span> arrow1 = arrow1.map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多行操作時，加大括號，需寫 return</span></span><br><span class="line"><span class="comment">// 多重參數時須加小括號包起來，單一參數可省略</span></span><br><span class="line"><span class="keyword">const</span> arrow2 = arrow2.forEach(<span class="function">(<span class="params">x,i</span>)=&gt;</span>&#123;</span><br><span class="line">    x = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> x*<span class="number">2</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map1);</span><br><span class="line"><span class="comment">// expected output: Array [2, 8, 18, 32]</span></span><br></pre></td></tr></table></figure>
+<h3 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h3><p>MDN 說明：</p>
+<p>map() 方法會建立一個新的陣列，其內容為原陣列的每一個元素經由回呼函式運算後所回傳的結果之集合。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array1 = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>];</span><br><span class="line"><span class="comment">// pass a function to map</span></span><br><span class="line"><span class="keyword">const</span> map1 = array1.map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map1);</span><br><span class="line"><span class="comment">// expected output: Array [2, 8, 18, 32]</span></span><br></pre></td></tr></table></figure>
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort()"></a>sort()</h3><p>MDN 說明：</p>
+<p>sort() 方法會原地（in place）對一個陣列的所有元素進行排序，並回傳此陣列。排序不一定是穩定的（stable）。預設的排序順序是根據字串的 Unicode 編碼位置（code points）而定。<br>語法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.sort([compareFunction]);</span><br></pre></td></tr></table></figure>
+<p>若省略 compareFunction 指定函式來排列，陣列將根據各個元素轉為字串後的每一個字元之 Unicode 編碼位置值進行排序。</p>
+<p>compareFunction:</p>
+<pre><code>* 若回傳值小於 0，則 a b
+
+* 若回傳 0，則 a 與 b 順序不變
+
+* 若回傳值大於 0，則 b a
+</code></pre><h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h3><p>MDN 說明：</p>
+<p>方法將一個累加器及陣列中每項元素（由左至右）傳入回呼函式，將陣列化為單一值。</p>
+<p>語法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">arr.reduce(callback[accumlator, currentValue, currentIndex?, array?], initialValue?)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 當回呼函式第一次被呼叫時，accumulator 與 currentValue 的值可能為兩種不同的狀況：若在呼叫 reduce() 時有提供 initialValue，則 accumulator 將會等於 initialValue，且 currentValue 會等於陣列中的第一個元素值；若沒有提供 initialValue，則 accumulator 會等於陣列的第一個元素值，且 currentValue 將會等於陣列的第二個元素值。 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 傳入 0 當初始值，如果沒有設定，預設會使用陣列第一個值，此例object會變成字串</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result4 = inventors.reduce(<span class="function">(<span class="params">total, inventor</span>) =&gt;</span> &#123;<span class="keyword">return</span> total + (inventor.passed - inventor.year);</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>MDN 建議要設定 initialValue，以確保結果</p>
+<h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from()"></a>Array.from()</h3><p>MDN 說明：</p>
+<p>方法會從類陣列（array-like）或是可迭代（iterable）物件建立一個新的 Array 實體。</p>
+<p>document.querySelectorAll 所選取到的並不是陣列，而是 NodeList，可以透過此方法轉換。</p>
+<h3 id="includes"><a href="#includes" class="headerlink" title="includes()"></a>includes()</h3><p>MDN 說明：</p>
+<p>判斷陣列是否包含特定的元素，並以此來回傳 true 或 false。<br>語法:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fromIndex:要於此陣列中開始搜尋 searchElement 的位置。如為負數值，則自 array.length - fromIndex 開始向後搜尋。預設值為 0。</span></span><br><span class="line">arr.includes(searchElement[, fromIndex?])</span><br></pre></td></tr></table></figure>
+<h3 id="解構賦值"><a href="#解構賦值" class="headerlink" title="解構賦值"></a>解構賦值</h3><p>MDN 說明：<br>是一種 JavaScript 運算式，可以將陣列或物件中的資料取出成獨立變數。</p>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="noopener">MDN 完整說明</a></p>
+<p>範例中有使用到，可以將陣列內的值先定義成變數，方便之後取用。</p>
+<p>用法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b, rest;</span><br><span class="line">[a, b] = [<span class="number">10</span>, <span class="number">20</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line">[a, b, ...rest] = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// [30, 40, 50]</span></span><br><span class="line"></span><br><span class="line">(&#123; a, b &#125; = &#123; <span class="attr">a</span>: <span class="number">10</span>, <span class="attr">b</span>: <span class="number">20</span> &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 變數交換</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">[a, b] = [b, a];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/19/javascript30-03/" rel="next" title="JavaScript30-Day3-CSS變數使用">
+                <i class="fa fa-chevron-left"></i> JavaScript30-Day3-CSS變數使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/23/javascript30-05/" rel="prev" title="JavaScript30-Day5-用flex來排版">
+                JavaScript30-Day5-用flex來排版 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#04-Array-Cardio-Day-1"><span class="nav-number">1.</span> <span class="nav-text">04 - Array Cardio Day 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#筆記"><span class="nav-number">1.1.</span> <span class="nav-text">筆記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#console-table"><span class="nav-number">1.1.1.</span> <span class="nav-text">console.table()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arrow-function"><span class="nav-number">1.1.2.</span> <span class="nav-text">Arrow function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">1.1.3.</span> <span class="nav-text">map()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort"><span class="nav-number">1.1.4.</span> <span class="nav-text">sort()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce"><span class="nav-number">1.1.5.</span> <span class="nav-text">reduce()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-from"><span class="nav-number">1.1.6.</span> <span class="nav-text">Array.from()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#includes"><span class="nav-number">1.1.7.</span> <span class="nav-text">includes()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解構賦值"><span class="nav-number">1.1.8.</span> <span class="nav-text">解構賦值</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2018/06/19/javascript30-04/';
+        this.page.identifier = '2018/06/19/javascript30-04/';
+        this.page.title = 'JavaScript30-Day4-陣列操作使用1';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

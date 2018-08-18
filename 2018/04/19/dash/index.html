@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="影音專案開發中，為了節省影音下載頻寬，研究後決定使用串流技術，現今瀏覽器主流的串流技術為 HLS 及 MPEG-DASH，HLS 為 Apple 所創，Safari 能原生支援，（video tag 直接塞 m3u8 檔），而之所以選擇 MPEG-DASH，就是因為支援度較高，有支援 MediaSource 的瀏覽器就能使用，據說 YouTube , NetFlix 等大廠也都選擇 MPEG-DA">
+<meta name="keywords" content="JavaScript,MPEG-DASH,Video">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MPEG-DASH]實作 Dash Player">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/04/19/dash/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="影音專案開發中，為了節省影音下載頻寬，研究後決定使用串流技術，現今瀏覽器主流的串流技術為 HLS 及 MPEG-DASH，HLS 為 Apple 所創，Safari 能原生支援，（video tag 直接塞 m3u8 檔），而之所以選擇 MPEG-DASH，就是因為支援度較高，有支援 MediaSource 的瀏覽器就能使用，據說 YouTube , NetFlix 等大廠也都選擇 MPEG-DA">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-18T03:55:16.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MPEG-DASH]實作 Dash Player">
+<meta name="twitter:description" content="影音專案開發中，為了節省影音下載頻寬，研究後決定使用串流技術，現今瀏覽器主流的串流技術為 HLS 及 MPEG-DASH，HLS 為 Apple 所創，Safari 能原生支援，（video tag 直接塞 m3u8 檔），而之所以選擇 MPEG-DASH，就是因為支援度較高，有支援 MediaSource 的瀏覽器就能使用，據說 YouTube , NetFlix 等大廠也都選擇 MPEG-DA">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/04/19/dash/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[MPEG-DASH]實作 Dash Player | V.Lo 學習筆記</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/04/19/dash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MPEG-DASH]實作 Dash Player
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-04-19 20:25:26" itemprop="dateCreated datePublished" datetime="2018-04-19T20:25:26+08:00">2018-04-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-18 11:55:16" itemprop="dateModified" datetime="2018-08-18T11:55:16+08:00">2018-08-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/19/dash/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2018/04/19/dash/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>影音專案開發中，為了節省影音下載頻寬，研究後決定使用串流技術，現今瀏覽器主流的串流技術為 <strong>HLS</strong> 及 <strong>MPEG-DASH</strong>，HLS 為 Apple 所創，Safari 能原生支援，（video tag 直接塞 m3u8 檔），而之所以選擇 MPEG-DASH，就是因為支援度較高，有支援 MediaSource 的瀏覽器就能使用，據說 YouTube , NetFlix 等大廠也都選擇 MPEG-DASH，基本上 HLS , DASH 的概念是差不多的，都是利用轉檔程式將影片轉出一個MPD檔(HLS則為 m3u8檔)，依據實作方式不同可以將影片轉成好幾個小片段，再透過MPD檔的資訊來依序載入，本篇則是透過 Range Header 來對影片檔做 http code 206 的 partial request，如此只需要一個影片檔，就能部分載入影片的片段。</p>
+<p><strong>DASH industry forum</strong> 有提供 <a href="https://github.com/Dash-Industry-Forum/dash.js" target="_blank" rel="noopener">dash.js</a> 的 library 可以使用，但因為工作上需彈性修改的緣故，不使用第三方函式庫，所以直接自己實作簡單的 dash 播放器。</p>
+<h3 id="製作-mpd-檔"><a href="#製作-mpd-檔" class="headerlink" title="製作 mpd 檔"></a>製作 mpd 檔</h3><p>需要下載 <code>mp4box</code> 來轉檔 :<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mp4box (<span class="keyword">for</span> macOS)</span><br></pre></td></tr></table></figure></p>
+<p>轉檔指令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mp4box -dash 3000 -frag 1000 -rap -bs-switching no -out ./video/input_dash.mpd input.mp4</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://gpac.wp.imt.fr/mp4box/dash/" target="_blank" rel="noopener">詳細指令可參考GPAC網站</a></p>
+<h3 id="實作播放器"><a href="#實作播放器" class="headerlink" title="實作播放器"></a>實作播放器</h3><p><a href="https://github.com/weiyuan1993/dashPlayer" target="_blank" rel="noopener">GitHub</a></p>
+<p>此實作採用以 ES6 撰寫</p>
+<p>寫出建構式，設定基本屬性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DashVideo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(mpdFileUrl) &#123;</span><br><span class="line">        <span class="keyword">this</span>._element = <span class="built_in">document</span>.createElement(<span class="string">'video'</span>);</span><br><span class="line">        <span class="keyword">this</span>.mpdSrc = mpdFileUrl;</span><br><span class="line">        <span class="keyword">this</span>._element.id = <span class="string">'ONEAD-dash-video'</span>;</span><br><span class="line">        <span class="keyword">this</span>._element.style.width =<span class="string">'640px'</span>;</span><br><span class="line">        <span class="keyword">this</span>._element.style.height =<span class="string">'360px'</span>;</span><br><span class="line">        <span class="keyword">this</span>._element.controls = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.autoPlay(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">this</span>.initPlay = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.lastBufferEndTime = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.segmentIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.isFetching = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">this</span>.onBufferUpdateFunc = <span class="keyword">this</span>.onBufferUpdate.bind(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.init();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化第一步驟，對 mpd 來源做 request</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.getMPDFile();</span><br><span class="line">&#125;</span><br><span class="line">getMPDFile() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.mpdSrc &amp;&amp; <span class="keyword">this</span>.mpdSrc.indexOf(<span class="string">'mpd'</span>) &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">"GET"</span>, <span class="keyword">this</span>.mpdSrc, <span class="literal">true</span>);</span><br><span class="line">        xhr.send();</span><br><span class="line">        xhr.addEventListener(<span class="string">'load'</span>, <span class="keyword">this</span>.onMPDFileLoad.bind(<span class="keyword">this</span>));</span><br><span class="line">        xhr.addEventListener(<span class="string">'error'</span>, <span class="keyword">this</span>.onMPDFileError.bind(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mpd 是 xml 的結構，所以可以使用 DOMParser來做解析，主要需要的資訊只有<code>BaseURL</code>, <code>mimeType</code>, <code>codecs</code>, <code>range</code>等，BaseUrl 是影片來源，mimeType 是影片格式，codecs 是此影片的編碼格式，range 則是描述每段 segment 的 檔案大小範圍。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">onMPDFileLoad(event) &#123;</span><br><span class="line">    <span class="keyword">if</span> (event.target.readyState === event.target.DONE) &#123;</span><br><span class="line">        <span class="keyword">let</span> tempoutput = event.target.response;</span><br><span class="line">        <span class="keyword">let</span> parser = <span class="keyword">new</span> DOMParser();</span><br><span class="line">        <span class="keyword">this</span>.xmlData = parser.parseFromString(tempoutput, <span class="string">'text/xml'</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"parsing mpd file..."</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.xmlData);</span><br><span class="line">        <span class="keyword">this</span>.mpdInfo = <span class="keyword">this</span>.parseMPDInfo();</span><br><span class="line">        <span class="keyword">this</span>.setupMediaSource();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">onMPDFileError(e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'Error retrieving manifest from '</span> + e);</span><br><span class="line">&#125;</span><br><span class="line">parseMPDInfo() &#123;</span><br><span class="line">    <span class="keyword">let</span> mpdData;</span><br><span class="line">    <span class="keyword">let</span> ini = <span class="keyword">this</span>.xmlData.querySelectorAll(<span class="string">"Initialization"</span>);</span><br><span class="line">    <span class="keyword">let</span> rep = <span class="keyword">this</span>.xmlData.querySelectorAll(<span class="string">"Representation"</span>);</span><br><span class="line">    <span class="keyword">let</span> segments = <span class="keyword">this</span>.xmlData.querySelectorAll(<span class="string">"SegmentURL"</span>);</span><br><span class="line">    <span class="keyword">let</span> mediaRangeArr = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; segments.length; i++) &#123;</span><br><span class="line">        mediaRangeArr.push(segments[i].getAttribute(<span class="string">'mediaRange'</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    mpdData = &#123;</span><br><span class="line">        fileUrl: <span class="string">'video/'</span>+rep[<span class="number">0</span>].querySelector(<span class="string">"BaseURL"</span>).textContent.toString(),</span><br><span class="line">        mimeType: rep[<span class="number">0</span>].getAttribute(<span class="string">'mimeType'</span>),</span><br><span class="line">        codecs: rep[<span class="number">0</span>].getAttribute(<span class="string">"codecs"</span>),</span><br><span class="line">        initRange: ini[<span class="number">0</span>].getAttribute(<span class="string">"range"</span>),</span><br><span class="line">        mediaRangeArr: mediaRangeArr,</span><br><span class="line">        rangeArrLength: mediaRangeArr.length</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(mpdData);</span><br><span class="line">    <span class="keyword">return</span> mpdData;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DASH主要透過 <code>MediaSource</code> 來實作，new 出來之後需透過 <code>URL.createObjectUrl()</code> 來建出一個 <code>blob:xxxx</code> 格式的資料，將其設置到 video 的 source 以便支援串流。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">setupMediaSource() &#123;</span><br><span class="line">    <span class="keyword">this</span>.mediaSource = <span class="keyword">new</span> MediaSource();</span><br><span class="line">    <span class="comment">// createObjectURL() is merely a means of connecting a media element's src attribute with a MediaSource instance.</span></span><br><span class="line">    <span class="keyword">let</span> url = URL.createObjectURL(<span class="keyword">this</span>.mediaSource);</span><br><span class="line">    <span class="keyword">this</span>.pause();</span><br><span class="line">    <span class="keyword">this</span>._element.src = url;</span><br><span class="line">    <span class="keyword">this</span>.mediaSource.addEventListener(<span class="string">'sourceopen'</span>, <span class="keyword">this</span>.onSourceOpen.bind(<span class="keyword">this</span>), <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line">onSourceOpen() &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Call this method when finished using object URL to let the browser not to keep the reference to the file any longer</span></span><br><span class="line">        <span class="comment">// 因有的 mp4 檔案用 mp4box 轉出來的 codecs 會多 mp4s.01,mp4s.02，導致無法播放，所以先使用指定的 codecs</span></span><br><span class="line">        URL.revokeObjectURL(<span class="keyword">this</span>._element.src);</span><br><span class="line">        <span class="keyword">this</span>.videoSourceBuffer = <span class="keyword">this</span>.mediaSource.addSourceBuffer(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.mpdInfo.mimeType&#125;</span>; codecs=avc1.42C01E,mp4a.40.2`</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'&lt;=====setupInitVideoBuffer======&gt;'</span>);</span><br><span class="line">        <span class="keyword">this</span>.fetchBuffer(<span class="keyword">this</span>.mpdInfo.initRange, <span class="keyword">this</span>.onInitReadyStateChange);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Exception calling addSourceBuffer for video'</span>, e);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 range request 的方式來做 fetch，responseType 要設定成 <code>arraybuffer</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fetchBuffer(range, onReadyStateChange) &#123;</span><br><span class="line">    <span class="keyword">if</span> (range &amp;&amp; !<span class="keyword">this</span>.isFetching) &#123;</span><br><span class="line">        <span class="keyword">this</span>.isFetching = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"%cFetch mediaRange:"</span> + range, <span class="string">"color:green"</span>)</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">'GET'</span>, <span class="keyword">this</span>.mpdInfo.fileUrl, <span class="literal">true</span>);</span><br><span class="line">        xhr.setRequestHeader(<span class="string">'Range'</span>, <span class="string">'bytes='</span> + range);</span><br><span class="line">        xhr.responseType = <span class="string">'arraybuffer'</span>;</span><br><span class="line">        xhr.send();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            xhr.addEventListener(<span class="string">'readystatechange'</span>, onReadyStateChange.bind(<span class="keyword">this</span>), <span class="literal">false</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="built_in">console</span>.error(<span class="string">'Exception while appending'</span>, e);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用 <code>updateend</code>來監聽buffer已更新至video<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//append 初始 video buffer</span></span><br><span class="line">onInitReadyStateChange(event) &#123;</span><br><span class="line">    <span class="keyword">if</span> (event.target.readyState === event.target.DONE) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.isFetching = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">this</span>.videoSourceBuffer.appendBuffer(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>(event.target.response));</span><br><span class="line">            <span class="keyword">this</span>.videoSourceBuffer.addEventListener(<span class="string">'updateend'</span>, <span class="keyword">this</span>.onBufferUpdateFunc, <span class="literal">false</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="built_in">console</span>.error(<span class="string">"Exception while appending initialization content"</span>, e);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 偵測 buffer 注入完成後，</span></span><br><span class="line">onBufferUpdate() &#123;</span><br><span class="line">    <span class="keyword">this</span>.bufferUpdated = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.initPlay) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'init buffer update'</span>);</span><br><span class="line">        <span class="keyword">this</span>.getStarted();</span><br><span class="line">        <span class="keyword">this</span>.initPlay = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">this</span>.play();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'%cappendBuffer '</span> + <span class="keyword">this</span>.mpdInfo.mediaRangeArr[<span class="keyword">this</span>.segmentIndex] + <span class="string">" DONE!"</span>, <span class="string">"color:orange"</span>);</span><br><span class="line">        <span class="keyword">this</span>.play();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.videoSourceBuffer.removeEventListener(<span class="string">"updateend"</span>, <span class="keyword">this</span>.onBufferUpdateFunc);</span><br><span class="line">&#125;</span><br><span class="line">getStarted() &#123;</span><br><span class="line">    <span class="comment">//fetch first mediaRange (segmentIndex = 0)</span></span><br><span class="line">    <span class="keyword">this</span>.fetchNextSegment();</span><br><span class="line">    <span class="keyword">this</span>._element.addEventListener(<span class="string">"timeupdate"</span>, <span class="keyword">this</span>.timeUpdateAndbufferCheck.bind(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主要是透過 video 的 <code>timeupdate</code> 事件去監聽何時要下載下一段，這邊我的做法是，當當前播放時間已經超過最後一段的segment 結束秒數的前5秒，就下載下一段。</p>
+<p>可以透過<code>mediaSource.sourceBuffers[0].buffered.end(0)</code> 來取得當前 buffer 的結束秒數。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">timeUpdateAndbufferCheck() &#123;</span><br><span class="line">    <span class="comment">//這個變數防止 buffer 還沒載入完就載入下一段，造成錯誤(moblie下載比較慢，邊下載邊timeupdate，又會去載入下一段造成同時appendBuffer的錯誤)</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.bufferUpdated) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.segmentIndex &lt; <span class="keyword">this</span>.mpdInfo.rangeArrLength - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 當前下載最後一段 segment 的前 5 秒下載下一段 segment，之後實際測試後會再微調</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>._element.currentTime &gt;= <span class="keyword">this</span>.lastBufferEndTime - <span class="number">5</span>) &#123;</span><br><span class="line">                <span class="comment">//if (this._element.currentTime &gt;= this.timeToDownloadNextBuffer()) &#123;</span></span><br><span class="line">                <span class="keyword">this</span>.bufferUpdated = <span class="literal">false</span>;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"%cReady to fetch next segment at "</span> + (<span class="keyword">this</span>.lastBufferEndTime - <span class="number">5</span>) + <span class="string">" s"</span>, <span class="string">"color:yellow"</span>)</span><br><span class="line">                <span class="keyword">this</span>.segmentIndex++;</span><br><span class="line">                <span class="keyword">this</span>.fetchNextSegment();</span><br><span class="line">                <span class="keyword">this</span>.lastBufferEndTime = <span class="keyword">this</span>.mediaSource.sourceBuffers[<span class="number">0</span>].buffered.end(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//全部載完之後就停止監測，避免重播時又重拉一次</span></span><br><span class="line">            <span class="keyword">this</span>._element.removeEventListener(<span class="string">'timeupdate'</span>, <span class="keyword">this</span>.timeUpdateAndbufferCheck, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//mediaSource.endOfStream() must be invoked before playback ends, in order to see ended event emitted by &lt;video&gt; element.</span></span><br><span class="line">    <span class="comment">//when last segment updateend, trigger endOfStream</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.segmentIndex === <span class="keyword">this</span>.mpdInfo.rangeArrLength - <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.videoSourceBuffer.addEventListener(<span class="string">'updateend'</span>, <span class="keyword">this</span>.lastBufferUpdateEnd.bind(<span class="keyword">this</span>), <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">timeToDownloadNextBuffer() &#123;</span><br><span class="line">    <span class="comment">//下載下一段 segment 的時機1:播放到當前 segment 的 0.25 倍時(之所以設定這麼低是因為一段 segment 只有3秒，讓網速慢的裝置有足夠的反應時間)</span></span><br><span class="line">    <span class="keyword">let</span> timeToDownload = (<span class="keyword">this</span>.mediaSource.sourceBuffers[<span class="number">0</span>].buffered.end(<span class="number">0</span>) - <span class="keyword">this</span>.lastBufferEndTime) * <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//下載下一段 segment 的時機2:當前影片秒數為已下載的最後一段 segment 結束秒數 的 0.7 倍時</span></span><br><span class="line">    <span class="comment">//let timeToDownload = this.mediaSource.sourceBuffers[0].buffered.end(0) * 0.7;</span></span><br><span class="line">    <span class="keyword">return</span> timeToDownload;</span><br><span class="line">&#125;</span><br><span class="line">fetchNextSegment() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.mpdInfo.mediaRangeArr[<span class="keyword">this</span>.segmentIndex] !== <span class="literal">undefined</span> &amp;&amp; <span class="keyword">this</span>.mpdInfo.fileUrl) &#123;</span><br><span class="line">        <span class="keyword">this</span>.fetchBuffer(<span class="keyword">this</span>.mpdInfo.mediaRangeArr[<span class="keyword">this</span>.segmentIndex], <span class="keyword">this</span>.onFetchNextSegmentReadyStateChange);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">onFetchNextSegmentReadyStateChange(event) &#123;</span><br><span class="line">    <span class="keyword">if</span> (event.target.readyState === event.target.DONE) &#123;</span><br><span class="line">        <span class="keyword">this</span>.isFetching = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.videoSourceBuffer.appendBuffer(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>(event.target.response));</span><br><span class="line">            <span class="keyword">this</span>.videoSourceBuffer.addEventListener(<span class="string">'updateend'</span>, <span class="keyword">this</span>.onBufferUpdateFunc, <span class="literal">false</span>);</span><br><span class="line">            <span class="comment">//在低網速的時候，有機會會發生已經載入下一段segment，但影片還是停住(video 處於播放狀態，</span></span><br><span class="line">            <span class="comment">//但buffer不夠多 readystate != 4 時會卡住)，</span></span><br><span class="line">            <span class="comment">//此時必須將 currentTime 重設，即可載入下一段</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.segmentIndex !== <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.readyState &lt; <span class="number">3</span>) &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'have not enough buffer to play. readystate: '</span>, <span class="keyword">this</span>.readyState);</span><br><span class="line">                <span class="keyword">this</span>._element.currentTime = <span class="keyword">this</span>._element.currentTime;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="built_in">console</span>.error(<span class="string">'Exception while appending'</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當下載到最後一段完成時， 需呼叫 endOfStream()，才能監聽到 video 的 end 事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lastBufferUpdateEnd() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.videoSourceBuffer.updating &amp;&amp; <span class="keyword">this</span>.mediaSource.readyState === <span class="string">'open'</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.mediaSource.endOfStream();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"%cmediaSouce endOfStream()"</span>, <span class="string">"color:pink"</span>)</span><br><span class="line">        <span class="keyword">this</span>._element.removeEventListener(<span class="string">'updatend'</span>, <span class="keyword">this</span>.lastBufferUpdateEnd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其餘方便操作的API<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">    duration() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">parseInt</span>(<span class="keyword">this</span>._element.duration.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    currentTime() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">parseInt</span>(<span class="keyword">this</span>._element.currentTime.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    play() &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.play();</span><br><span class="line">    &#125;</span><br><span class="line">    pause() &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.pause();</span><br><span class="line">    &#125;</span><br><span class="line">    mute() &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.muted = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    unMute() &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.muted = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    volume(value) &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.volume = value;</span><br><span class="line">    &#125;</span><br><span class="line">    getVolume() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._element.volume;</span><br><span class="line">    &#125;</span><br><span class="line">    setCurrentTime(time) &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.currentTime = time;</span><br><span class="line">    &#125;</span><br><span class="line">    get readyState() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._element.readyState;</span><br><span class="line">    &#125;</span><br><span class="line">    isPlaying() &#123;</span><br><span class="line">        <span class="keyword">return</span> !<span class="keyword">this</span>._element.paused;</span><br><span class="line">    &#125;</span><br><span class="line">    autoPlay(value) &#123;</span><br><span class="line">        <span class="keyword">this</span>._element.autoplay = value;</span><br><span class="line">    &#125;</span><br><span class="line">    ifHasVideoSrc() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._element.src !== <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> mpdVideo = <span class="keyword">new</span> DashVideo(<span class="string">'./video/input_dash.mpd'</span>);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(mpdVideo._element);</span><br></pre></td></tr></table></figure></p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="http://www.sparrowjang.com/2016/08/09/MPEG-DASH-video-concept/" target="_blank" rel="noopener">http://www.sparrowjang.com/2016/08/09/MPEG-DASH-video-concept/</a></p>
+<p><a href="http://www.instructables.com/id/Making-Your-Own-Simple-DASH-MPEG-Server-Windows-10/" target="_blank" rel="noopener">http://www.instructables.com/id/Making-Your-Own-Simple-DASH-MPEG-Server-Windows-10/</a></p>
+<p><a href="https://developer.mozilla.org/en-US/Apps/Fundamentals/Audio_and_video_delivery/Setting_up_adaptive_streaming_media_sources" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/Apps/Fundamentals/Audio_and_video_delivery/Setting_up_adaptive_streaming_media_sources</a></p>
+<p><a href="https://developer.mozilla.org/en-US/Apps/Fundamentals/Audio_and_video_delivery/Setting_up_adaptive_streaming_media_sources" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/Apps/Fundamentals/Audio_and_video_delivery/Setting_up_adaptive_streaming_media_sources</a></p>
+<p><a href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/samples/dn551368(v=vs.85" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/samples/dn551368(v=vs.85)</a>)</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/MPEG-DASH/" rel="tag"># MPEG-DASH</a>
+          
+            <a href="/tags/Video/" rel="tag"># Video</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/29/promise-1/" rel="next" title="[ES6]Promise使用-抓資料">
+                <i class="fa fa-chevron-left"></i> [ES6]Promise使用-抓資料
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/27/leetcode-100/" rel="prev" title="[Leetcode]100. Same Tree">
+                [Leetcode]100. Same Tree <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#製作-mpd-檔"><span class="nav-number">1.</span> <span class="nav-text">製作 mpd 檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實作播放器"><span class="nav-number">2.</span> <span class="nav-text">實作播放器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#參考資料"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2018/04/19/dash/';
+        this.page.identifier = '2018/04/19/dash/';
+        this.page.title = '[MPEG-DASH]實作 Dash Player';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
