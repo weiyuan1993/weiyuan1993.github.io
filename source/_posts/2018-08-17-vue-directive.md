@@ -12,6 +12,8 @@ tags:
 
 除了 Vue 自身內建的 `v-model`， `v-show` 等等指令，也可以自行註冊客製化的指令。
 
+<!--more-->
+
 
 [Source code](https://github.com/weiyuan1993/vue-complete-guide/tree/master/homework-Directives)
 
