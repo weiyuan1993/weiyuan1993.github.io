@@ -1,5 +1,5 @@
 ---
-title: [Vue] 使用 Directive 來註冊客製化指令
+title: "[Vue] 使用 Directive 來註冊客製化指令"
 date: 2018-08-17 17:43:32
 categories: Vue.js
 tags:
