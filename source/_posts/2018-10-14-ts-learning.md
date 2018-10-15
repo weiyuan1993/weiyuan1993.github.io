@@ -13,6 +13,7 @@ tags:
 ```bash
 npm install -g typescript
 ```
+<!--more-->
 
 ## 編譯
 
