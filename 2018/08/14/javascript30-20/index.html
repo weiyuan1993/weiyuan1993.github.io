@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=7.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=7.2.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=7.2.0">
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=7.2.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '複製',
+      copy_success: '複製成功',
+      copy_failure: '複製失敗'
+    }
+  };
+</script>
+
+  <meta name="description" content="20 - Speech Detection筆記DEMOGitHub 用 JS 操作語音辨識，並即時輸出文字!">
+<meta name="keywords" content="JavaScript,JavaScript30,Speech Recongnition">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Day20-即時語音辨識">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/08/14/javascript30-20/index.html">
+<meta property="og:site_name" content="V.Lo 學習筆記">
+<meta property="og:description" content="20 - Speech Detection筆記DEMOGitHub 用 JS 操作語音辨識，並即時輸出文字!">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-07-29T13:44:41.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript30-Day20-即時語音辨識">
+<meta name="twitter:description" content="20 - Speech Detection筆記DEMOGitHub 用 JS 操作語音辨識，並即時輸出文字!">
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/08/14/javascript30-20/">
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JavaScript30-Day20-即時語音辨識 | V.Lo 學習筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo 學習筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">我的改變，我看得見</p>
+      
+      <a>
+        <img class="custom-logo-image" src="[object Object]" alt="V.Lo 學習筆記">
+      </a>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br/>關於</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>標籤</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>歸檔</a>
+
+  </li>
+    </ul>
+</nav>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/08/14/javascript30-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="我的學習記錄部落格">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo 學習筆記">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript30-Day20-即時語音辨識
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-08-14 22:01:24" itemprop="dateCreated datePublished" datetime="2018-08-14T22:01:24+08:00">2018-08-14</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript30/" itemprop="url" rel="index"><span itemprop="name">JavaScript30</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="fa fa-comment-o"></i>
+    </span>
+    
+      <span class="post-meta-item-text">評論數：</span>
+    
+  
+    <a href="/2018/08/14/javascript30-20/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/14/javascript30-20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          <br/>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="20-Speech-Detection"><a href="#20-Speech-Detection" class="headerlink" title="20 - Speech Detection"></a>20 - Speech Detection</h1><h2 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h2><p><a href="https://weiyuan1993.github.io/JavaScript30/20-Speech-Detection">DEMO</a><br><a href="https://github.com/weiyuan1993/JavaScript30/tree/master/20-Speech-Detection" target="_blank" rel="noopener">GitHub</a></p>
+<p>用 JS 操作語音辨識，並即時輸出文字!</p>
+<a id="more"></a>
+<h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><h3 id="新建語音辨識"><a href="#新建語音辨識" class="headerlink" title="新建語音辨識"></a>新建語音辨識</h3><p>語音辨識為瀏覽器內建，但目前似乎只有 Chrome 支援。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新建語音辨識</span></span><br><span class="line"><span class="keyword">const</span> speechRecongnition = <span class="keyword">new</span> SpeechRecognition();</span><br><span class="line"><span class="comment">// 控制是否即時回傳</span></span><br><span class="line">speechRecongnition.interimResults = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// 語言</span></span><br><span class="line">speechRecongnition.lang = <span class="string">"zh-TW"</span>;</span><br></pre></td></tr></table></figure>
+<p>語言沒設定的話預設應該是瀏覽器語言，所以我後來做了按鈕可以切換到英文，因為在中文的辨視下講英文辨識率較低。</p>
+<h3 id="先設定好初始文字"><a href="#先設定好初始文字" class="headerlink" title="先設定好初始文字"></a>先設定好初始文字</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span><br><span class="line">p.textContent = <span class="string">"請開始說話 🗣"</span>;</span><br><span class="line"><span class="keyword">const</span> words = <span class="built_in">document</span>.querySelector(<span class="string">".words"</span>);</span><br><span class="line">words.appendChild(p);</span><br></pre></td></tr></table></figure>
+<h3 id="輸出辨識內容"><a href="#輸出辨識內容" class="headerlink" title="輸出辨識內容"></a>輸出辨識內容</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">speechRecongnition.addEventListener(<span class="string">"result"</span>, e =&gt; &#123;</span><br><span class="line">  <span class="comment">// 這邊為了取得回傳的結果，並將所有辨識的文字串在一起</span></span><br><span class="line">  <span class="keyword">const</span> transcript = <span class="built_in">Array</span>.from(e.results)</span><br><span class="line">    .map(<span class="function"><span class="params">result</span> =&gt;</span> result[<span class="number">0</span>])</span><br><span class="line">    .map(<span class="function"><span class="params">result</span> =&gt;</span> result.transcript)</span><br><span class="line">    .join(<span class="string">""</span>);</span><br><span class="line">  <span class="comment">// 這邊可以濾掉髒話XD</span></span><br><span class="line">  <span class="keyword">const</span> filterBadLang = transcript.replace(<span class="regexp">/幹你娘|靠北|操你媽/gi</span>, <span class="string">"💩"</span>);</span><br><span class="line">  p.textContent = filterBadLang;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 監測是否辨識停止，停止後新增新的 p 為下一句做準備來達到換行效果</span></span><br><span class="line">  <span class="keyword">if</span> (e.results[<span class="number">0</span>].isFinal) &#123;</span><br><span class="line">    p = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span><br><span class="line">    words.appendChild(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>辨識的途中可以做一些小運用，比如聽到一些關鍵字可以屏蔽掉，或者是當作語音助理，回應內容，查天氣等等。</p>
+<h3 id="辨識啟動"><a href="#辨識啟動" class="headerlink" title="辨識啟動"></a>辨識啟動</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">speechRecongnition.addEventListener(<span class="string">"end"</span>, speechRecongnition.start);</span><br><span class="line">speechRecongnition.start();</span><br></pre></td></tr></table></figure>
+<p>為了讓辨識可以一直啟動，所以在 end 觸發時再次觸發 start。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          
+            <a href="/tags/Speech-Recongnition/" rel="tag"># Speech Recongnition</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2018/08/09/javascript30-19/" rel="next" title="JavaScript30-Day19-能添加效果的視訊 canvas">
+                <i class="fa fa-chevron-left"></i> JavaScript30-Day19-能添加效果的視訊 canvas
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2018/08/17/javascript30-21/" rel="prev" title="JavaScript30-Day21-指南針">
+                JavaScript30-Day21-指南針 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/favicons/favicon.png"
+      alt="Vic Lo">
+  <p class="site-author-name" itemprop="name">Vic Lo</p>
+  <div class="site-description motion-element" itemprop="description">我的學習記錄部落格</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分類</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">標籤</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/weiyuan1993" title="GitHub &rarr; https://github.com/weiyuan1993" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#20-Speech-Detection"><span class="nav-number">1.</span> <span class="nav-text">20 - Speech Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#筆記"><span class="nav-number">1.1.</span> <span class="nav-text">筆記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法"><span class="nav-number">1.2.</span> <span class="nav-text">作法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建語音辨識"><span class="nav-number">1.2.1.</span> <span class="nav-text">新建語音辨識</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先設定好初始文字"><span class="nav-number">1.2.2.</span> <span class="nav-text">先設定好初始文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#輸出辨識內容"><span class="nav-number">1.2.3.</span> <span class="nav-text">輸出辨識內容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#辨識啟動"><span class="nav-number">1.2.4.</span> <span class="nav-text">辨識啟動</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+  
+  <script src="/js/affix.js?v=7.2.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://weiyuan1993.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://weiyuan1993.github.io/2018/08/14/javascript30-20/";
+    this.page.identifier = "2018/08/14/javascript30-20/";
+    this.page.title = 'JavaScript30-Day20-即時語音辨識';};
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://weiyuan1993.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+</body>
+</html>
