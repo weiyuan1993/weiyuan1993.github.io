@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VQpcpNLkrdVhtPaJ9izYe6GKdYExmzgDrXD--uj-Jlc" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/favicons/apple-icon-180x180.png?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="之前讀書會分享的 TS 紀錄也同步在部落格放一份方便日後新增。 環境建立1npm install -g typescript">
+<meta name="keywords" content="TypeScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TS 基礎用法與學習紀錄">
+<meta property="og:url" content="https://weiyuan1993.github.io/2018/10/14/ts-learning/index.html">
+<meta property="og:site_name" content="V.Lo Notes">
+<meta property="og:description" content="之前讀書會分享的 TS 紀錄也同步在部落格放一份方便日後新增。 環境建立1npm install -g typescript">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-04-26T05:59:11.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TS 基礎用法與學習紀錄">
+<meta name="twitter:description" content="之前讀書會分享的 TS 紀錄也同步在部落格放一份方便日後新增。 環境建立1npm install -g typescript">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weiyuan1993.github.io/2018/10/14/ts-learning/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>TS 基礎用法與學習紀錄 | V.Lo Notes</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121123169-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-121123169-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">V.Lo Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I write down what I've learned</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weiyuan1993.github.io/2018/10/14/ts-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vic Lo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicons/favicon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="V.Lo Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TS 基礎用法與學習紀錄
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-14 21:58:19" itemprop="dateCreated datePublished" datetime="2018-10-14T21:58:19+08:00">2018-10-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2022-04-26 13:59:11" itemprop="dateModified" datetime="2022-04-26T13:59:11+08:00">2022-04-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/14/ts-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count fb-comments-count" data-href="https://weiyuan1993.github.io/2018/10/14/ts-learning/" itemprop="commentCount">0</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前讀書會分享的 TS 紀錄也同步在部落格放一份方便日後新增。</p>
+<h2 id="環境建立"><a href="#環境建立" class="headerlink" title="環境建立"></a>環境建立</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="編譯"><a href="#編譯" class="headerlink" title="編譯"></a>編譯</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tsc</span><br><span class="line">tsc -watch</span><br></pre></td></tr></table></figure>
+<h2 id="tsconfig："><a href="#tsconfig：" class="headerlink" title="tsconfig："></a>tsconfig：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc --init</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"lib"</span>: [<span class="string">"es2015"</span>, <span class="string">"dom"</span>],</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"./build"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指定 tsconfig.json 路徑</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -p tsconfig.json</span><br></pre></td></tr></table></figure>
+<h2 id="搭配-webpack-gulp-or-grunt-打包"><a href="#搭配-webpack-gulp-or-grunt-打包" class="headerlink" title="搭配 webpack, gulp or grunt 打包"></a>搭配 webpack, gulp or grunt 打包</h2><ul>
+<li>webpack: <code>ts-loader</code></li>
+<li>gulp: <code>gulp-typescript</code></li>
+<li>grunt: <code>grunt-ts</code></li>
+</ul>
+<h2 id="安裝第三方函式庫定義檔"><a href="#安裝第三方函式庫定義檔" class="headerlink" title="安裝第三方函式庫定義檔"></a>安裝第三方函式庫定義檔</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @types/lodash</span><br></pre></td></tr></table></figure>
+<h2 id="入門"><a href="#入門" class="headerlink" title="入門"></a>入門</h2><p>可先到 <a href="http://www.typescriptlang.org/play/" target="_blank" rel="noopener">TypeScript Playground</a> 遊玩</p>
+<ol>
+<li>basic</li>
+<li>interface / type</li>
+<li>class</li>
+<li>import / export</li>
+<li>generic</li>
+<li>window 物件與第三方函式庫</li>
+<li>與框架搭配<h3 id="1-basic"><a href="#1-basic" class="headerlink" title="1.basic"></a>1.basic</h3></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="string">"2"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">plus</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(plus(x, y)); <span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
+<p>上面程式會輸出 12 (因為 string 優先，1 被轉換為字串了)<br>此時使用 TypeScript 可避免此問題</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x: any = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> y: string = <span class="string">"2"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tsPlus</span>(<span class="params">a: number, b: number</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(tsPlus(x, y)); <span class="comment">// 編輯器會直接報錯</span></span><br></pre></td></tr></table></figure>
+<p><strong>基本型別定義</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// boolean</span></span><br><span class="line"><span class="keyword">const</span> isDone: boolean = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">// number</span></span><br><span class="line"><span class="keyword">const</span> min = <span class="number">60</span> <span class="keyword">as</span> number;</span><br><span class="line"><span class="comment">// string</span></span><br><span class="line"><span class="keyword">const</span> nameString: string = <span class="string">"lala"</span>;</span><br><span class="line"><span class="comment">// Array</span></span><br><span class="line"><span class="keyword">const</span> idList: number[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> list: <span class="built_in">Array</span>&lt;number&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">list.push(<span class="number">5</span>);</span><br><span class="line">list.push(<span class="string">"5"</span>); <span class="comment">//編譯器會報錯</span></span><br></pre></td></tr></table></figure>
+<p><strong>物件型別定義</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// object type</span></span><br><span class="line"><span class="keyword">const</span> sampleObject: &#123;</span><br><span class="line">  value1: number,</span><br><span class="line">  value2: string,</span><br><span class="line">  value3?: any, <span class="comment">// ? 為可有可無的參數</span></span><br><span class="line">  callBack: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">void</span></span><br><span class="line">&#125; = &#123;</span><br><span class="line">  value1: <span class="number">1</span>,</span><br><span class="line">  value2: <span class="string">"a"</span>,</span><br><span class="line">  callBack: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>enum 枚舉</strong>:<br>可以指定變數只能是枚舉內的屬性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// enum</span></span><br><span class="line">enum PlayMode &#123;</span><br><span class="line">  <span class="comment">// 不指定值的話預設是從 0,1,2 編號開始</span></span><br><span class="line">  InRead = <span class="string">"inread"</span>,</span><br><span class="line">  InPage = <span class="string">"instream"</span>,</span><br><span class="line">  InCover = <span class="string">"incover"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> playMode: PlayMode = PlayMode.InRead;</span><br><span class="line">playMode = <span class="string">"inpage"</span>; <span class="comment">// 編輯器會報錯</span></span><br></pre></td></tr></table></figure>
+<p><strong>any</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> iAmString:string = <span class="string">'string is me'</span>;</span><br><span class="line"><span class="keyword">var</span> notSure: any = <span class="number">4</span>;</span><br><span class="line">notSure = <span class="string">"string"</span>;</span><br><span class="line"><span class="comment">// 懶人招，不建議使用</span></span><br><span class="line">(<span class="xml"><span class="tag">&lt;<span class="name">any</span>&gt;</span>iAmString) = 5;</span></span><br></pre></td></tr></table></figure>
+<p>使用 any 型別，變數就可以任意變更為其他型別的值，等同於寫原本的 js，不建議使用</p>
+<p><strong>function</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params">price: number</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (price *= <span class="number">8</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> price1 = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> price2 = <span class="string">"2"</span>;</span><br><span class="line">getPrice(price1);</span><br><span class="line">getPrice(price2); <span class="comment">// 編輯器會報錯</span></span><br><span class="line">getPrice(price1, price2); <span class="comment">// 編輯器會報錯</span></span><br><span class="line"><span class="comment">// 選擇性參數</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createName</span>(<span class="params">firstName: string, lastName?: string</span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (lastName) &#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> firstName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-interface-type"><a href="#2-interface-type" class="headerlink" title="2.interface / type"></a>2.interface / type</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">interface IPlayer &#123;</span><br><span class="line">  play(): <span class="keyword">void</span>;</span><br><span class="line">  pause(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line">interface IPlayerParam &#123;</span><br><span class="line">  playMode: string;</span><br><span class="line">  playerType: string;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// interface 可以擴充</span></span><br><span class="line">interface MPlayer extends IPlayer &#123;</span><br><span class="line">  duration: number;</span><br><span class="line">  banner: HTMLImageElement;</span><br><span class="line">&#125;</span><br><span class="line">type xmlParam = &#123;</span><br><span class="line">    src:string;</span><br><span class="line">    data:&#123;</span><br><span class="line">        value:number;</span><br><span class="line">        status:string;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>兩種應用差別不大，但通常 <code>interface</code> 會用來定義 class 的規格，<code>type</code> 用來定義參數內容，視使用情況而定</p>
+<h3 id="3-class"><a href="#3-class" class="headerlink" title="3.class"></a>3.class</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> </span>&#123;</span><br><span class="line">  <span class="comment">// property</span></span><br><span class="line">  private playMode: string;</span><br><span class="line">  private playerType: string;</span><br><span class="line">  <span class="comment">// 建構式</span></span><br><span class="line">  <span class="keyword">constructor</span>(_playMode: string, _playerType: string) &#123;</span><br><span class="line">    <span class="keyword">this</span>.playMode = _playMode;</span><br><span class="line">    <span class="keyword">this</span>.playerType = _playerType;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// static function 不需 new 出來即可使用</span></span><br><span class="line">  public <span class="keyword">static</span> isSupportHTML5(): boolean &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public play() &#123; &#125;</span><br><span class="line">  public pause() &#123; &#125;</span><br><span class="line">  public replay() &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(Player.isSupportHTML5())&#123;</span><br><span class="line">  <span class="keyword">const</span> player = <span class="keyword">new</span> Player(<span class="string">"inread"</span>,<span class="string">"DF"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>class 使用 interface</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player2</span> <span class="title">implements</span> <span class="title">IPlayer</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>implements</code> 來實踐 interface，此時 Player2 一定要有 IPlayer 裡定義的規格否則 TS 會報錯</p>
+<p><strong>class extends 繼承/擴充</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobilePlayer</span> <span class="keyword">extends</span> <span class="title">Player</span> <span class="title">implements</span> <span class="title">MPlayer</span> </span>&#123;</span><br><span class="line">  public duration: number;</span><br><span class="line">  public banner: HTMLImageElement | any;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// super 呼叫父類別的建構式，一定要放於建構式第一行</span></span><br><span class="line">    <span class="keyword">super</span>(<span class="string">"mobile-inread"</span>, <span class="string">"INSTANT"</span>);</span><br><span class="line">    <span class="keyword">this</span>.duration = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">this</span>.setBanner();</span><br><span class="line">  &#125;</span><br><span class="line">  private setBanner() &#123;</span><br><span class="line">    <span class="keyword">this</span>.banner = <span class="keyword">new</span> Image();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> m = <span class="keyword">new</span> MobilePlayer();</span><br><span class="line">m.replay()</span><br></pre></td></tr></table></figure></p>
+<p>可以看到 MobilePlayer 裡面只有一個 <code>method</code> 卻可以使用 <code>replay()</code> 而不會報錯，是因為 <code>MobilePlayer</code> 繼承了 <code>Player</code>，所以可以使用其 method。</p>
+<p>由於 javascript 的 <code>class</code> 並不是真正的以類別為基礎(class-based)的物件導向，其實是一種用 <code>prototype</code> 原形鏈的包裝過語法糖，只是原形鏈繼承寫法比較複雜，因此在 ES5 的寫法還是透過 <code>prototype</code> 來做擴充，ES6 後使用 class 比較直覺精簡，但其實骨子裡還是透過原形鏈的概念<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MobilePlayer.prototype.setBanner = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.banner = <span class="keyword">new</span> Image();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://tw.saowen.com/a/81fe8cc9057c27d2f0ae5cc969dec3e6738cdeed5c743452d1eb1fc8ef4a2e71" target="_blank" rel="noopener">參考1</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">參考2</a></p>
+<h3 id="4-modules"><a href="#4-modules" class="headerlink" title="4.modules"></a>4.modules</h3><p>內部模組運用:</p>
+<p><code>namespace</code> 可將變數儲存在共同的命名空間，防止命名衝突，透過 <code>export</code> 關鍵字將變數 export 出去</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">namespace Guoshi &#123;</span><br><span class="line">  <span class="keyword">const</span> internalConst = &#123;&#125;;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">const</span> VALUE = <span class="number">0.5</span>;</span><br><span class="line">  <span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    init() &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入的方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 這行用來參考到用到的檔案</span></span><br><span class="line"><span class="comment">/// &lt;reference path="./namespace.ts" /&gt;</span></span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">new</span> Guoshi.Main();</span><br><span class="line">namespace Guoshi &#123;</span><br><span class="line">    <span class="keyword">const</span> main = <span class="keyword">new</span> Main();</span><br><span class="line">    main.init();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>tsconfig.json 可以設定 <code>outFile</code> 來讓各檔案輸出成單一檔案。(並不是透過模組化，而是透過命名空間)</p>
+<p><strong>import / export</strong>: 外部模組的運用 (需透過模組打包工具如 webpack or browserify)</p>
+<p>webpack 設定可參考 source code 裡的 <code>webpack.config.js</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 外部模組的運用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> VALUE = <span class="number">0.5</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"init"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"ajax call"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>引入的方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Main, ajax &#125; <span class="keyword">from</span> <span class="string">"./export"</span>;</span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">new</span> Main();</span><br><span class="line">main.init();</span><br><span class="line">ajax();</span><br></pre></td></tr></table></figure>
+<h3 id="5-Generic"><a href="#5-Generic" class="headerlink" title="5.Generic"></a>5.Generic</h3><p>泛型可讓型別定義更加彈性，當構建一些函式需要被共用時可以採用。</p>
+<p><strong>Generic function</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logAndReturn</span>&lt;<span class="title">T</span>&gt;(<span class="params">thing: T</span>): <span class="title">T</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(thing);</span><br><span class="line">  <span class="keyword">return</span> thing;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在使用時才指定當前要使用的型別</span></span><br><span class="line"><span class="keyword">let</span> stringLog = logAndReturn&lt;string&gt;(<span class="string">"string log"</span>);</span><br><span class="line"><span class="keyword">let</span> numberLog = logAndReturn&lt;number&gt;(<span class="number">500</span>);</span><br><span class="line">type Phone = &#123;</span><br><span class="line">  vendor: string,</span><br><span class="line">  number: number</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> myPhone: Phone = &#123; <span class="attr">vendor</span>: <span class="string">"Apple"</span>, <span class="attr">number</span>: <span class="number">0987654321</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> logMyPhone: Phone = logAndReturn&lt;Phone&gt;(myPhone);</span><br></pre></td></tr></table></figure>
+<p><strong>Generic object</strong>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 使用 &lt;T&gt; 可以實作不同種的 Game</span></span><br><span class="line">interface Games&lt;T&gt; &#123;</span><br><span class="line">  games: <span class="built_in">Array</span>&lt;T&gt;;</span><br><span class="line">  addGame: <span class="function">(<span class="params">newGame: T</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">  getAll: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Array</span>&lt;T&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type GameForChild = &#123;</span><br><span class="line">  name: string;</span><br><span class="line">  price: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myChildGameStore: Games&lt;GameForChild&gt; = &#123;</span><br><span class="line">  games: [],</span><br><span class="line">  addGame(game) &#123;</span><br><span class="line">    <span class="keyword">this</span>.games.push(game);</span><br><span class="line">  &#125;,</span><br><span class="line">  getAll() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.games;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> allGames = myChildGameStore.getAll();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// myAdultGame</span></span><br><span class="line">type GameForAdult = &#123;</span><br><span class="line">  productName: string;</span><br><span class="line">  age: number;</span><br><span class="line">  type: string;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> myAdultGameStore: Games&lt;GameForAdult&gt; = &#123;</span><br><span class="line">  games: [],</span><br><span class="line">  addGame(game) &#123;</span><br><span class="line">    <span class="keyword">this</span>.games.push(game);</span><br><span class="line">  &#125;,</span><br><span class="line">  getAll() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.games;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>myChildGameStore, myAdultGameStore 都是實踐 <code>interface Games&lt;T&gt;</code>，所以裡面都必須要有 games, addGame(), getAll(), 但是因為使用了 generic ，所以這三個屬性裡的值可以彈性使用 GameForChild 或 GameForAdult (宣告時必須指定)。</p>
+<p>同理，應用在 <code>class</code> 也是一樣道理。</p>
+<h3 id="6-window-物件與第三方函式庫"><a href="#6-window-物件與第三方函式庫" class="headerlink" title="6.window 物件與第三方函式庫"></a>6.window 物件與第三方函式庫</h3><p><strong>window 物件定義</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// window 沒有的物件</span></span><br><span class="line">interface Window &#123;</span><br><span class="line">    ONEAD: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.ONEAD = <span class="string">''</span>;</span><br></pre></td></tr></table></figure></p>
+<p>因為 TS 只會知道既定 window 底下有的物件與函式，如果有其他 script 在 window 下產生變數， TS 不會知道，必須宣告型別才不會報錯。</p>
+<p><strong>周圍變數宣告</strong>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 宣告已存在 window 裡的 第三方 lib，TS 未定義會報錯</span></span><br><span class="line">$(<span class="string">"#ONEAD"</span>);</span><br><span class="line">jQuery(<span class="string">"Guoshi"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>使用第三方套件時，因為沒有型別定義，所以 TS 會報錯，可以透過安裝 <code>@types</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/jquery --save-dev</span><br></pre></td></tr></table></figure>
+<p>或者是自己寫定義檔 <code>.d.ts</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//jquery.d.ts</span></span><br><span class="line">declare <span class="keyword">var</span> $: <span class="function">(<span class="params">selector: string</span>) =&gt;</span> &#123;&#125;;</span><br><span class="line">declare <span class="keyword">var</span> jQuery: <span class="function">(<span class="params">selector: string</span>) =&gt;</span> &#123;&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="與框架搭配"><a href="#與框架搭配" class="headerlink" title="與框架搭配"></a>與框架搭配</h3><p>可參考 Microsoft 對兩大框架的 starter 包</p>
+<ul>
+<li><a href="https://github.com/Microsoft/TypeScript-Vue-Starter" target="_blank" rel="noopener">TypeScript-Vue-Starter</a></li>
+<li><a href="https://github.com/Microsoft/TypeScript-React-Starter" target="_blank" rel="noopener">TypeScript-React-Starter</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/01/javascript30-28/" rel="next" title="JavaScript30-Day28-製作可調整影片速度的 bar">
+                <i class="fa fa-chevron-left"></i> JavaScript30-Day28-製作可調整影片速度的 bar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/31/javascript30-29/" rel="prev" title="JavaScript30-Day29-實作一個精準的倒數計時器">
+                JavaScript30-Day29-實作一個精準的倒數計時器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicons/favicon.png"
+                alt="Vic Lo" />
+            
+              <p class="site-author-name" itemprop="name">Vic Lo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/weiyuan1993" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#環境建立"><span class="nav-number">1.</span> <span class="nav-text">環境建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#編譯"><span class="nav-number">2.</span> <span class="nav-text">編譯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tsconfig："><span class="nav-number">3.</span> <span class="nav-text">tsconfig：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭配-webpack-gulp-or-grunt-打包"><span class="nav-number">4.</span> <span class="nav-text">搭配 webpack, gulp or grunt 打包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝第三方函式庫定義檔"><span class="nav-number">5.</span> <span class="nav-text">安裝第三方函式庫定義檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入門"><span class="nav-number">6.</span> <span class="nav-text">入門</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-basic"><span class="nav-number">6.1.</span> <span class="nav-text">1.basic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-interface-type"><span class="nav-number">6.2.</span> <span class="nav-text">2.interface / type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-class"><span class="nav-number">6.3.</span> <span class="nav-text">3.class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-modules"><span class="nav-number">6.4.</span> <span class="nav-text">4.modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Generic"><span class="nav-number">6.5.</span> <span class="nav-text">5.Generic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-window-物件與第三方函式庫"><span class="nav-number">6.6.</span> <span class="nav-text">6.window 物件與第三方函式庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#與框架搭配"><span class="nav-number">6.7.</span> <span class="nav-text">與框架搭配</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vic Lo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://weiyuan1993.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://weiyuan1993.github.io/2018/10/14/ts-learning/';
+        this.page.identifier = '2018/10/14/ts-learning/';
+        this.page.title = 'TS 基礎用法與學習紀錄';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://weiyuan1993.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
