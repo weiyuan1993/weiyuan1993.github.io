@@ -110,18 +110,18 @@
 
 
 
-  <meta name="description" content="583.Delete Operation for Two Strings 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes">
+  <meta name="description" content="2.Add Two Numbers 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single d">
 <meta name="keywords" content="Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Leetcode]2.Add Two Numbers">
 <meta property="og:url" content="https://weiyuan1993.github.io/2020/12/25/leetcode-2/index.html">
 <meta property="og:site_name" content="V.Lo Notes">
-<meta property="og:description" content="583.Delete Operation for Two Strings 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes">
+<meta property="og:description" content="2.Add Two Numbers 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single d">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-04-26T05:59:11.789Z">
+<meta property="og:updated_time" content="2022-04-29T07:20:11.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Leetcode]2.Add Two Numbers">
-<meta name="twitter:description" content="583.Delete Operation for Two Strings 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes">
+<meta name="twitter:description" content="2.Add Two Numbers 題目連結 難易度：Medium   You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single d">
 
 
 
@@ -379,7 +379,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2022-04-26 13:59:11" itemprop="dateModified" datetime="2022-04-26T13:59:11+08:00">2022-04-26</time>
+                <time title="Modified: 2022-04-29 15:20:11" itemprop="dateModified" datetime="2022-04-29T15:20:11+08:00">2022-04-29</time>
               
             
           </span>
@@ -440,7 +440,7 @@
       
 
       
-        <h2 id="583-Delete-Operation-for-Two-Strings"><a href="#583-Delete-Operation-for-Two-Strings" class="headerlink" title="583.Delete Operation for Two Strings"></a>583.Delete Operation for Two Strings</h2><p> <a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">題目連結</a><br> 難易度：Medium  </p>
+        <h2 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2.Add Two Numbers"></a>2.Add Two Numbers</h2><p> <a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">題目連結</a><br> 難易度：Medium  </p>
 <p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.<br>You may assume the two numbers do not contain any leading zero, except the number 0 itself.<br><a id="more"></a></p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>Create a empty ListNode first, write a recursive function to dive into <code>l1</code>, <code>l2</code> ListNode,<br>Caculate the sum of <code>l1.val</code> and <code>l2.val</code> and the carry from last node, only store the number 1~9 part in the<br>current node, pass carry to next node, re-run the function until <code>l1</code> and <code>l2</code> are all empty.</p>
 <h2 id="解題"><a href="#解題" class="headerlink" title="解題"></a>解題</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val, next) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = (val===undefined ? 0 : val)</span></span><br><span class="line"><span class="comment"> *     this.next = (next===undefined ? null : next)</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l1</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; l2</span></span><br><span class="line"><span class="comment"> * @return &#123;ListNode&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> addTwoNumbers = <span class="function"><span class="keyword">function</span>(<span class="params">l1, l2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> list = <span class="keyword">new</span> ListNode();</span><br><span class="line">    <span class="keyword">let</span> result = list;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addListNode</span>(<span class="params">node1, node2, carry = <span class="number">0</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(!node1 &amp;&amp; !node2 &amp;&amp; carry === <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(node1)&#123;</span><br><span class="line">            sum += node1.val;</span><br><span class="line">            node1 = node1.next; <span class="comment">// ready to calculate next node</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node2)&#123;</span><br><span class="line">            sum += node2.val;</span><br><span class="line">            node2 = node2.next; <span class="comment">// ready to calculate next node</span></span><br><span class="line">        &#125;</span><br><span class="line">        sum += carry; <span class="comment">// add last sum carry</span></span><br><span class="line">        carry = (sum / <span class="number">10</span>) &gt;= <span class="number">1</span> ? <span class="number">1</span> : <span class="number">0</span> <span class="comment">// if current sum &gt; 10, carry is 1</span></span><br><span class="line">        list.next = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>); <span class="comment">// store digit &lt;10 part to next node</span></span><br><span class="line">        list = list.next;</span><br><span class="line">        addListNode(node1,node2,carry)</span><br><span class="line">    &#125;</span><br><span class="line">    addListNode(l1,l2)</span><br><span class="line">    <span class="keyword">return</span> result.next <span class="comment">// first node is an empty node, return next node</span></span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -486,6 +486,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/07/18/leetcode-67/" rel="prev" title="[Leetcode]67. Add Binary">
+                [Leetcode]67. Add Binary <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -569,7 +573,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -734,7 +738,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#583-Delete-Operation-for-Two-Strings"><span class="nav-number">1.</span> <span class="nav-text">583.Delete Operation for Two Strings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解題"><span class="nav-number">3.</span> <span class="nav-text">解題</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">1.</span> <span class="nav-text">2.Add Two Numbers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解題"><span class="nav-number">3.</span> <span class="nav-text">解題</span></a></li></ol></div>
             
 
           </div>
